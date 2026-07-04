@@ -11,7 +11,7 @@ const Hero = ({ onContact }) => (
       </h1>
       <div className="hero-titles">
         <span className="hero-tag">Full Stack Developer</span>
-        <span className="hero-tag">Digital Marketing Expert</span>
+        <span className="hero-tag">Digital Marketing Instructor</span>
         <span className="hero-tag">SEO Expert</span>
         <span className="hero-tag">Senior Instructor</span>
       </div>

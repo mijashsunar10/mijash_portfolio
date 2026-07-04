@@ -5,23 +5,45 @@ const Contact = () => {
   const [note, setNote] = useState('');
   const [showNote, setShowNote] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.elements['cf-name'].value.trim();
     const email = form.elements['cf-email'].value.trim();
     const type = form.elements['cf-type'].value;
-    const message = form.elements['cf-message'].value.trim();
+    const rawMessage = form.elements['cf-message'].value.trim();
 
-    const subject = encodeURIComponent(`New Inquiry from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nProject Type: ${type || 'Not specified'}\n\nMessage:\n${message}`
-    );
-    window.location.href = `mailto:mijashsunar1@gmail.com?subject=${subject}&body=${body}`;
-
-    setNote('Opening your email app to send this…');
+    setNote('Sending message...');
     setShowNote(true);
-    setTimeout(() => setShowNote(false), 4000);
+
+    const message = `Project Type: ${type || 'Not specified'}\n\nMessage:\n${rawMessage}`;
+
+    const formData = new FormData();
+    formData.append("access_key", "67452f4f-65d7-403b-88b3-d89a18666be3");
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("subject", `New Inquiry: ${type || 'General inquiry'} from ${name}`);
+    formData.append("message", message);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setNote("Success! Your message has been sent.");
+        form.reset();
+      } else {
+        setNote("Error: " + (data.message || "Failed to send."));
+      }
+    } catch (error) {
+      setNote("Something went wrong. Please try again.");
+    } finally {
+      setTimeout(() => setShowNote(false), 5000);
+    }
   };
 
   return (
