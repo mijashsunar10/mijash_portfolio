@@ -8,11 +8,14 @@
   --emerald: #1fd9a0;
   --emerald-dim: #12604a;
   --emerald-glow: rgba(31, 217, 160, 0.35);
+  --purple: #7c5cff;
+  --purple-glow: rgba(124, 92, 255, 0.3);
+  --blue: #3b82f6;
   --ink: #f2f3ef;
   --ink-dim: #8a9291;
   --glass: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.09);
-  --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  --glass-hover: rgba(255, 255, 255, 0.08);
 
   --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: 'Space Grotesk', system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -33,7 +36,7 @@ html, body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.5;
 }
 
@@ -61,7 +64,7 @@ a:hover {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;

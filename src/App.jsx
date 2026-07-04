@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import './App.css';
-
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
@@ -8,163 +7,122 @@ import Experience from './components/Experience';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 
-const SCENE_LABELS = ['Home', 'About', 'Skills', 'Experience', 'Work', 'Contact'];
+const LABELS = ['Home', 'About', 'Skills', 'Experience', 'Work', 'Contact'];
 
 function App() {
   const [current, setCurrent] = useState(0);
-  const animatingRef = useRef(false);
-  const total = 6;
+  const lock = useRef(false);
+  const total = LABELS.length;
 
-  // Navigate to a scene
-  const goTo = useCallback((index) => {
-    if (animatingRef.current) return;
-    index = Math.max(0, Math.min(total - 1, index));
-    if (index === current) return;
-    animatingRef.current = true;
-    setCurrent(index);
-    setTimeout(() => { animatingRef.current = false; }, 620);
-  }, [current]);
+  const goTo = useCallback((i) => {
+    if (lock.current) return;
+    i = Math.max(0, Math.min(total - 1, i));
+    if (i === current) return;
+    lock.current = true;
+    setCurrent(i);
+    setTimeout(() => { lock.current = false; }, 620);
+  }, [current, total]);
 
-  // Calculate scene transform & opacity
-  const getSceneStyle = (i) => {
-    const offset = i - current;
-    const zIndex = total - Math.min(Math.abs(offset), total);
-    if (offset === 0) {
-      return { transform: 'scale(1)', opacity: 1, zIndex, pointerEvents: 'auto' };
-    } else if (offset > 0) {
-      const depth = Math.min(offset, 3);
-      return { transform: `scale(${1 - depth * 0.14})`, opacity: 0, zIndex, pointerEvents: 'none' };
-    } else {
-      const depth = Math.min(-offset, 3);
-      return { transform: `scale(${1 + depth * 0.5})`, opacity: 0, zIndex, pointerEvents: 'none' };
-    }
+  const style = (i) => {
+    const off = i - current;
+    const z = total - Math.min(Math.abs(off), total);
+    if (off === 0) return { transform: 'scale(1)', opacity: 1, zIndex: z, pointerEvents: 'auto' };
+    if (off > 0) return { transform: `scale(${1 - Math.min(off, 3) * 0.14})`, opacity: 0, zIndex: z, pointerEvents: 'none' };
+    return { transform: `scale(${1 + Math.min(-off, 3) * 0.5})`, opacity: 0, zIndex: z, pointerEvents: 'none' };
   };
 
-  // Wheel navigation
   useEffect(() => {
-    let wheelLock = false;
-    const handleWheel = (e) => {
-      if (wheelLock) return;
-      if (Math.abs(e.deltaY) < 5) return;
-
-      // Allow internal scrolling in scrollable containers
-      const scrollEl = e.target?.closest?.('.work-grid, .timeline, .skill-categories');
-      if (scrollEl) {
-        const atBottom = scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - 4;
-        const atTop = scrollEl.scrollTop <= 2;
-        if (e.deltaY > 0 && !atBottom) return;
-        if (e.deltaY < 0 && !atTop) return;
+    let wl = false;
+    const h = (e) => {
+      if (wl || Math.abs(e.deltaY) < 5) return;
+      const s = e.target?.closest?.('.work-grid,.timeline,.skill-categories');
+      if (s) {
+        if (e.deltaY > 0 && s.scrollTop + s.clientHeight < s.scrollHeight - 4) return;
+        if (e.deltaY < 0 && s.scrollTop > 2) return;
       }
-
-      wheelLock = true;
-      if (e.deltaY > 0) goTo(current + 1);
-      else goTo(current - 1);
-      setTimeout(() => { wheelLock = false; }, 680);
+      wl = true;
+      goTo(current + (e.deltaY > 0 ? 1 : -1));
+      setTimeout(() => { wl = false; }, 680);
     };
-
-    window.addEventListener('wheel', handleWheel, { passive: true });
-    return () => window.removeEventListener('wheel', handleWheel);
+    window.addEventListener('wheel', h, { passive: true });
+    return () => window.removeEventListener('wheel', h);
   }, [current, goTo]);
 
-  // Touch navigation
   useEffect(() => {
-    let touchStartY = null;
-    let touchStartTarget = null;
-
-    const handleTouchStart = (e) => {
-      touchStartY = e.touches[0].clientY;
-      touchStartTarget = e.target;
-    };
-
-    const handleTouchEnd = (e) => {
-      if (touchStartY === null) return;
-      const diff = touchStartY - e.changedTouches[0].clientY;
-
-      const scrollEl = touchStartTarget?.closest?.('.work-grid, .timeline, .skill-categories');
-      if (scrollEl) {
-        const atBottom = scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - 4;
-        const atTop = scrollEl.scrollTop <= 2;
-        if (diff > 40 && !atBottom) { touchStartY = null; touchStartTarget = null; return; }
-        if (diff < -40 && !atTop) { touchStartY = null; touchStartTarget = null; return; }
+    let sy = null, st = null;
+    const ts = (e) => { sy = e.touches[0].clientY; st = e.target; };
+    const te = (e) => {
+      if (sy === null) return;
+      const d = sy - e.changedTouches[0].clientY;
+      const s = st?.closest?.('.work-grid,.timeline,.skill-categories');
+      if (s) {
+        if (d > 40 && s.scrollTop + s.clientHeight < s.scrollHeight - 4) { sy = null; return; }
+        if (d < -40 && s.scrollTop > 2) { sy = null; return; }
       }
-
-      if (Math.abs(diff) > 40) {
-        if (diff > 0) goTo(current + 1);
-        else goTo(current - 1);
-      }
-      touchStartY = null;
-      touchStartTarget = null;
+      if (Math.abs(d) > 40) goTo(current + (d > 0 ? 1 : -1));
+      sy = null; st = null;
     };
-
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
-    return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
-    };
+    window.addEventListener('touchstart', ts, { passive: true });
+    window.addEventListener('touchend', te, { passive: true });
+    return () => { window.removeEventListener('touchstart', ts); window.removeEventListener('touchend', te); };
   }, [current, goTo]);
 
-  // Keyboard navigation
   useEffect(() => {
-    const handleKey = (e) => {
+    const h = (e) => {
       if (e.key === 'ArrowDown' || e.key === 'PageDown') goTo(current + 1);
       if (e.key === 'ArrowUp' || e.key === 'PageUp') goTo(current - 1);
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
+    window.addEventListener('keydown', h);
+    return () => window.removeEventListener('keydown', h);
   }, [current, goTo]);
 
-  const sceneComponents = [
-    <Hero key="hero" onContact={() => goTo(5)} />,
-    <About key="about" />,
-    <Skills key="skills" />,
-    <Experience key="experience" />,
-    <Portfolio key="portfolio" />,
-    <Contact key="contact" />,
+  const scenes = [
+    <Hero key="h" onContact={() => goTo(5)} />,
+    <About key="a" />,
+    <Skills key="s" />,
+    <Experience key="e" />,
+    <Portfolio key="p" />,
+    <Contact key="c" />,
   ];
-
-  const sceneClasses = [
-    'hero-scene',
-    'about-scene',
-    'skills-scene',
-    'exp-scene',
-    'work-scene',
-    'contact-scene',
-  ];
+  const cls = ['hero-scene', 'about-scene', 'skills-scene', 'exp-scene', 'work-scene', 'contact-scene'];
 
   return (
     <>
-      {/* Grain overlay */}
-      <div className="grain"></div>
+      {/* Ambient orbs */}
+      <div className="orb orb-1" />
+      <div className="orb orb-2" />
+      <div className="orb orb-3" />
+      <div className="grain" />
 
-      {/* Brandmark */}
-      <div id="brandmark" className={current >= 1 ? 'show' : ''}>
-        <span className="mark"></span>MIJASH SUNAR
-      </div>
+      {/* Header */}
+      <header className="site-header">
+        <div className="header-brand" onClick={() => goTo(0)}>
+          <span className="mark" /> MIJASH SUNAR
+        </div>
+        <nav className="header-nav">
+          {LABELS.map((l, i) => (
+            <button key={i} className={`header-link ${i === current ? 'active' : ''}`} onClick={() => goTo(i)}>
+              {l}
+            </button>
+          ))}
+        </nav>
+        <button className="header-cta" onClick={() => goTo(5)}>Hire Me</button>
+      </header>
 
       {/* Nav dots */}
-      <div id="progress" className={current >= 0 ? 'show' : ''}>
-        {SCENE_LABELS.map((label, i) => (
+      <div id="progress">
+        {LABELS.map((l, i) => (
           <div className="dot-wrap" key={i}>
-            <div
-              className={`dot ${i === current ? 'active' : ''}`}
-              onClick={() => goTo(i)}
-              role="button"
-              aria-label={`Go to ${label}`}
-            />
-            <span className="dot-label">{label}</span>
+            <div className={`dot ${i === current ? 'active' : ''}`} onClick={() => goTo(i)} role="button" aria-label={`Go to ${l}`} />
+            <span className="dot-label">{l}</span>
           </div>
         ))}
       </div>
 
-      {/* Stage with scenes */}
+      {/* Scenes */}
       <div id="stage">
-        {sceneComponents.map((comp, i) => (
-          <div
-            className={`scene ${sceneClasses[i]} ${i === current ? 'active' : ''}`}
-            key={i}
-            style={getSceneStyle(i)}
-          >
+        {scenes.map((comp, i) => (
+          <div className={`scene ${cls[i]} ${i === current ? 'active' : ''}`} key={i} style={style(i)}>
             {comp}
           </div>
         ))}
