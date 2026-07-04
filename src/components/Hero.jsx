@@ -1,5 +1,5 @@
 import { Mail, Phone } from 'lucide-react';
-import heroImg from '../assets/hero-dev.png';
+import profileImg from '../assets/mijash.jpeg';
 
 const Hero = ({ onContact }) => (
   <div className="scene-inner">
@@ -44,7 +44,7 @@ const Hero = ({ onContact }) => (
       </div>
     </div>
     <div className="hero-image-wrap">
-      <img className="hero-image" src={heroImg} alt="Mijash Sunar" width="380" height="380" />
+      <img className="hero-image" src={profileImg} alt="Mijash Sunar" width="380" height="380" style={{ objectFit: 'cover' }} />
     </div>
   </div>
 );

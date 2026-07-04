@@ -14,7 +14,7 @@ const skillData = [
   {
     name: 'Database',
     icon: <Database size={16} />,
-    skills: ['MySQL', 'MongoDB'],
+    skills: ['MySQL', 'MongoDB', 'Postgres SQL'],
   },
   {
     name: 'DevOps & Tools',
@@ -26,6 +26,7 @@ const skillData = [
     icon: <Globe size={16} />,
     skills: ['SEO', 'Content Strategy', 'Social Media', 'Paid Ads', 'Analytics'],
   },
+  
   {
     name: 'Other',
     icon: <Palette size={16} />,
@@ -45,7 +46,7 @@ const Skills = () => {
         {skillData.map((cat) => (
           <div className="skill-category" key={cat.name}>
             <div className="skill-cat-name">
-              {cat.icon} {cat.name}
+               {cat.icon} {cat.name}
             </div>
             <div className="skill-pills">
               {cat.skills.map((s) => (

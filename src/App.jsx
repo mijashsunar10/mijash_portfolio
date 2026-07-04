@@ -4,10 +4,12 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
+import Education from './components/Education';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
+import logo from './assets/logo.jpg';
 
-const LABELS = ['Home', 'About', 'Skills', 'Experience', 'Work', 'Contact'];
+const LABELS = ['Home', 'About', 'Skills', 'Work', 'Experience', 'Education', 'Contact'];
 
 function App() {
   const [current, setCurrent] = useState(0);
@@ -77,14 +79,15 @@ function App() {
   }, [current, goTo]);
 
   const scenes = [
-    <Hero key="h" onContact={() => goTo(5)} />,
+    <Hero key="h" onContact={() => goTo(6)} />,
     <About key="a" />,
     <Skills key="s" />,
-    <Experience key="e" />,
     <Portfolio key="p" />,
+    <Experience key="e" />,
+    <Education key="edu" />,
     <Contact key="c" />,
   ];
-  const cls = ['hero-scene', 'about-scene', 'skills-scene', 'exp-scene', 'work-scene', 'contact-scene'];
+  const cls = ['hero-scene', 'about-scene', 'skills-scene', 'work-scene', 'exp-scene', 'edu-scene', 'contact-scene'];
 
   return (
     <>
@@ -97,7 +100,7 @@ function App() {
       {/* Header */}
       <header className="site-header">
         <div className="header-brand" onClick={() => goTo(0)}>
-          <span className="mark" /> MIJASH SUNAR
+          <img src={logo} alt="Mijash" className="header-logo" /> MIJASH SUNAR
         </div>
         <nav className="header-nav">
           {LABELS.map((l, i) => (
@@ -112,8 +115,8 @@ function App() {
       {/* Nav dots */}
       <div id="progress">
         {LABELS.map((l, i) => (
-          <div className="dot-wrap" key={i}>
-            <div className={`dot ${i === current ? 'active' : ''}`} onClick={() => goTo(i)} role="button" aria-label={`Go to ${l}`} />
+          <div className={`dot-wrap ${i === current ? 'active' : ''}`} key={i} onClick={() => goTo(i)} role="button" aria-label={`Go to ${l}`}>
+            <div className="dot" />
             <span className="dot-label">{l}</span>
           </div>
         ))}

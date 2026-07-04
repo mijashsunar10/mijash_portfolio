@@ -33,25 +33,13 @@ const experiences = [
   },
 ];
 
-const education = {
-  degree: 'Bachelor of Science in Computer Science & IT',
-  school: 'Soch College of IT',
-  period: '2021 — Present',
-  location: 'Pokhara, Nepal',
-};
-
-const achievements = [
-  { title: 'Best Intern Award', desc: 'Received during 6-month internship at XDEZO Technologies, 2023.' },
-  { title: '2nd Place in Code Camp', desc: 'Achieved 2nd place demonstrating strong competitive coding skills.' },
-];
-
 const Experience = () => {
   return (
     <div className="scene-inner">
       <div className="depth-grid"></div>
       <div className="showcase-head">
         <div className="section-label">Career Path</div>
-        <h2 className="section-heading">Experience & Education</h2>
+        <h2 className="section-heading">Work Experience</h2>
       </div>
       <div className="timeline">
         {experiences.map((exp, i) => (
@@ -64,22 +52,6 @@ const Experience = () => {
                 <li key={j}>{d}</li>
               ))}
             </ul>
-          </div>
-        ))}
-
-        {/* Education */}
-        <div className="timeline-item">
-          <div className="timeline-date">{education.period}</div>
-          <div className="timeline-role">{education.degree}</div>
-          <div className="timeline-company">{education.school} · {education.location}</div>
-        </div>
-
-        {/* Achievements */}
-        {achievements.map((a, i) => (
-          <div className="timeline-item" key={'ach-' + i}>
-            <div className="timeline-date">Achievement</div>
-            <div className="timeline-role">{a.title}</div>
-            <div className="timeline-company">{a.desc}</div>
           </div>
         ))}
       </div>
