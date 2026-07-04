@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { Sun, Moon } from 'lucide-react';
 import './App.css';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -15,6 +16,19 @@ function App() {
   const [current, setCurrent] = useState(0);
   const lock = useRef(false);
   const total = LABELS.length;
+
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const goTo = useCallback((i) => {
     if (lock.current) return;
@@ -109,7 +123,12 @@ function App() {
             </button>
           ))}
         </nav>
-        <button className="header-cta" onClick={() => goTo(5)}>Hire Me</button>
+        <div className="header-actions">
+          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Theme">
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+          <button className="header-cta" onClick={() => goTo(6)}>Hire Me</button>
+        </div>
       </header>
 
       {/* Nav dots */}

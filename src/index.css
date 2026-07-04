@@ -16,10 +16,30 @@
   --glass: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.09);
   --glass-hover: rgba(255, 255, 255, 0.08);
+  --bg-header: rgba(8, 9, 10, 0.7);
+  --cta-text: #04120c;
 
   --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: 'Space Grotesk', system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
+}
+
+[data-theme='light'] {
+  --bg: #f3f5f3;
+  --bg2: #e4e7e5;
+  --emerald: #0b9e71;
+  --emerald-dim: #d1f7eb;
+  --emerald-glow: rgba(11, 158, 113, 0.15);
+  --purple: #6343e3;
+  --purple-glow: rgba(99, 67, 227, 0.12);
+  --blue: #1d4ed8;
+  --ink: #0d0f0e;
+  --ink-dim: #5c6463;
+  --glass: rgba(0, 0, 0, 0.03);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-hover: rgba(0, 0, 0, 0.05);
+  --bg-header: rgba(243, 245, 243, 0.7);
+  --cta-text: #ffffff;
 }
 
 *, *::before, *::after {
