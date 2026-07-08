@@ -1,3 +1,13 @@
+import { motion } from 'framer-motion';
+import {
+  TextReveal,
+  SlideIn,
+  TiltCard,
+  ParallaxLayer,
+  FloatingElement,
+  ease,
+} from './AnimationUtils';
+
 const experiences = [
   {
     date: 'Nov 2025 — Present',
@@ -33,27 +43,162 @@ const experiences = [
   },
 ];
 
-const Experience = () => {
+// Timeline items alternate sliding from left/right for visual variety
+const getCardAnimation = (i) => {
+  const isEven = i % 2 === 0;
+  return {
+    initial: {
+      x: isEven ? -60 : 60,
+      y: 20,
+      opacity: 0,
+      scale: 0.92,
+      filter: 'blur(6px)',
+    },
+    animate: {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+    },
+  };
+};
+
+const Experience = ({ isActive = false }) => {
   return (
     <div className="scene-inner">
       <div className="depth-grid"></div>
-      <div className="showcase-head">
-        <div className="section-label">Career Path</div>
-        <h2 className="section-heading">Work Experience</h2>
+
+      {/* Parallax ambient elements */}
+      <ParallaxLayer speed={0.15} style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+        <FloatingElement amplitude={8} duration={12} delay={0} style={{ position: 'absolute', top: '5%', right: '5%' }}>
+          <div className="cinema-particle cinema-particle--accent" />
+        </FloatingElement>
+        <FloatingElement amplitude={14} duration={9} delay={3} style={{ position: 'absolute', bottom: '10%', left: '8%' }} rotate>
+          <div className="cinema-particle cinema-particle--lg" />
+        </FloatingElement>
+      </ParallaxLayer>
+
+      <div className="showcase-head" style={{ zIndex: 2 }}>
+        <SlideIn isActive={isActive} direction="up" delay={0.05} distance={25}>
+          <div className="section-label">Career Path</div>
+        </SlideIn>
+        <TextReveal
+          text="Work Experience"
+          isActive={isActive}
+          delay={0.15}
+          className="section-heading"
+          as="h2"
+          staggerDelay={0.05}
+        />
       </div>
-      <div className="timeline">
-        {experiences.map((exp, i) => (
-          <div className="timeline-item" key={i}>
-            <div className="timeline-date">{exp.date}</div>
-            <div className="timeline-role">{exp.role}</div>
-            <div className="timeline-company">{exp.company}</div>
-            <ul className="timeline-desc">
-              {exp.desc.map((d, j) => (
-                <li key={j}>{d}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+
+      <div className="timeline" style={{ zIndex: 2 }}>
+        {/* Animated timeline line */}
+        <motion.div
+          className="timeline-line-animated"
+          initial={{ scaleY: 0 }}
+          animate={isActive ? { scaleY: 1 } : { scaleY: 0 }}
+          transition={{ duration: 1.2, delay: 0.3, ease: ease.cinematic }}
+          style={{
+            position: 'absolute',
+            left: 12,
+            top: 0,
+            bottom: 0,
+            width: 1,
+            background: 'linear-gradient(to bottom, var(--emerald), var(--purple), var(--glass-border))',
+            transformOrigin: 'top',
+          }}
+        />
+
+        {experiences.map((exp, i) => {
+          const anim = getCardAnimation(i);
+          return (
+            <motion.div
+              className="timeline-item"
+              key={i}
+              initial={anim.initial}
+              animate={isActive ? anim.animate : anim.initial}
+              transition={{
+                duration: 0.7,
+                delay: 0.4 + i * 0.2,
+                ease: ease.cinematic,
+              }}
+              whileHover={{
+                x: 8,
+                borderColor: 'rgba(31,217,160,0.4)',
+                boxShadow: '0 16px 40px -12px rgba(31,217,160,0.15)',
+                transition: { duration: 0.3 },
+              }}
+            >
+              {/* Animated timeline dot */}
+              <motion.div
+                className="timeline-dot-animated"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={isActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.6 + i * 0.2,
+                  ease: ease.elastic,
+                }}
+                style={{
+                  position: 'absolute',
+                  left: -30,
+                  top: 24,
+                  width: 10,
+                  height: 10,
+                  background: 'var(--emerald)',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 12px var(--emerald)',
+                }}
+              />
+
+              <motion.div
+                className="timeline-date"
+                initial={{ opacity: 0, x: -10 }}
+                animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                transition={{ duration: 0.4, delay: 0.6 + i * 0.2, ease: ease.cinematic }}
+              >
+                {exp.date}
+              </motion.div>
+
+              <motion.div
+                className="timeline-role"
+                initial={{ opacity: 0, y: 8 }}
+                animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.2, ease: ease.cinematic }}
+              >
+                {exp.role}
+              </motion.div>
+
+              <motion.div
+                className="timeline-company"
+                initial={{ opacity: 0 }}
+                animate={isActive ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.4, delay: 0.75 + i * 0.2, ease: ease.cinematic }}
+              >
+                {exp.company}
+              </motion.div>
+
+              <ul className="timeline-desc">
+                {exp.desc.map((d, j) => (
+                  <motion.li
+                    key={j}
+                    initial={{ opacity: 0, x: -15 }}
+                    animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -15 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.85 + i * 0.2 + j * 0.06,
+                      ease: ease.cinematic,
+                    }}
+                  >
+                    {d}
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );
