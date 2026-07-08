@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Sun, Moon, Menu, X } from 'lucide-react';
+import { Sun, Moon, Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 import Hero from './components/Hero';
@@ -9,9 +9,10 @@ import Experience from './components/Experience';
 import Education from './components/Education';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
-import logo from './assets/logo.jpg';
+import MSLogo from './components/MSLogo';
 
 const LABELS = ['Home', 'About', 'Skills', 'Work', 'Experience', 'Education', 'Contact'];
+const EASE_CINEMA = [0.76, 0, 0.24, 1];
 
 function App() {
   const [current, setCurrent] = useState(0);
@@ -24,13 +25,65 @@ function App() {
     return localStorage.getItem('theme') || 'dark';
   });
 
-  // Loading screen state
-  const [loading, setLoading] = useState(true);
+  // ===== CINEMATIC INTRO STATE =====
+  const [introPhase, setIntroPhase] = useState('intro'); // 'intro' | 'ready' | 'done'
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const introTimer = useRef(null);
+  const introReady = introPhase !== 'done';
+
+  // Auto-advance, or user can skip instantly
+  useEffect(() => {
+    introTimer.current = setTimeout(() => {
+      if (introPhase === 'intro') setIntroPhase('ready');
+    }, 2100);
+    return () => clearTimeout(introTimer.current);
+  }, [introPhase]);
+
+  // When ready phase, transition out
+  useEffect(() => {
+    if (introPhase === 'ready') {
+      const t = setTimeout(() => setIntroPhase('done'), 800);
+      return () => clearTimeout(t);
+    }
+  }, [introPhase]);
+
+  // Mouse tracking for parallax on intro
+  useEffect(() => {
+    if (introPhase === 'done') return;
+    const handler = (e) => {
+      setMousePos({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      });
+    };
+    window.addEventListener('mousemove', handler);
+    return () => window.removeEventListener('mousemove', handler);
+  }, [introPhase]);
+
+  // Allow click/scroll/key to skip intro
+  const skipIntro = useCallback(() => {
+    if (introPhase !== 'done') {
+      clearTimeout(introTimer.current);
+      setIntroPhase('done');
+    }
+  }, [introPhase]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2200);
-    return () => clearTimeout(timer);
-  }, []);
+    if (introPhase === 'done') return;
+    const handleClick = () => skipIntro();
+    const handleWheel = () => skipIntro();
+    const handleKey = (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') skipIntro();
+    };
+    window.addEventListener('click', handleClick);
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('keydown', handleKey);
+    return () => {
+      window.removeEventListener('click', handleClick);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKey);
+    };
+  }, [introPhase, skipIntro]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -51,7 +104,6 @@ function App() {
     setTimeout(() => { lock.current = false; }, 820);
   }, [current, total]);
 
-  // Cinematic scene transition styles
   const style = (i) => {
     const off = i - current;
     const z = total - Math.min(Math.abs(off), total);
@@ -62,6 +114,7 @@ function App() {
 
   // Wheel handler
   useEffect(() => {
+    if (introPhase !== 'done') return;
     let wl = false;
     const h = (e) => {
       if (wl || Math.abs(e.deltaY) < 5) return;
@@ -76,10 +129,11 @@ function App() {
     };
     window.addEventListener('wheel', h, { passive: true });
     return () => window.removeEventListener('wheel', h);
-  }, [current, goTo]);
+  }, [current, goTo, introPhase]);
 
   // Touch handler
   useEffect(() => {
+    if (introPhase !== 'done') return;
     let sy = null, st = null;
     const ts = (e) => { sy = e.touches[0].clientY; st = e.target; };
     const te = (e) => {
@@ -96,20 +150,22 @@ function App() {
     window.addEventListener('touchstart', ts, { passive: true });
     window.addEventListener('touchend', te, { passive: true });
     return () => { window.removeEventListener('touchstart', ts); window.removeEventListener('touchend', te); };
-  }, [current, goTo]);
+  }, [current, goTo, introPhase]);
 
   // Keyboard handler
   useEffect(() => {
+    if (introPhase !== 'done') return;
     const h = (e) => {
       if (e.key === 'ArrowDown' || e.key === 'PageDown') goTo(current + 1);
       if (e.key === 'ArrowUp' || e.key === 'PageUp') goTo(current - 1);
     };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
-  }, [current, goTo]);
+  }, [current, goTo, introPhase]);
 
+  const isDone = introPhase === 'done';
   const scenes = [
-    <Hero key="h" onContact={() => goTo(6)} isActive={!loading && current === 0} />,
+    <Hero key="h" onContact={() => goTo(6)} isActive={isDone && current === 0} />,
     <About key="a" isActive={current === 1} />,
     <Skills key="s" isActive={current === 2} />,
     <Portfolio key="p" isActive={current === 3} />,
@@ -119,63 +175,151 @@ function App() {
   ];
   const cls = ['hero-scene', 'about-scene', 'skills-scene', 'work-scene', 'exp-scene', 'edu-scene', 'contact-scene'];
 
+  // Parallax offset from mouse (for intro)
+  const px = (mousePos.x - 0.5) * 30;
+  const py = (mousePos.y - 0.5) * 30;
+
   return (
     <>
-      {/* ===== CINEMATIC LOADING SCREEN ===== */}
+      {/* ===== CINEMATIC INTRO SCREEN ===== */}
       <AnimatePresence>
-        {loading && (
+        {introReady && (
           <motion.div
-            className="loading-screen"
+            className="intro-screen"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            exit={{ opacity: 0, scale: 1.08, filter: 'blur(12px)' }}
+            transition={{ duration: 0.9, ease: EASE_CINEMA }}
           >
+            {/* Mouse-reactive parallax background layers */}
             <motion.div
-              className="loading-logo-wrap"
-              initial={{ scale: 0.5, opacity: 0, filter: 'blur(20px)' }}
-              animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            >
-              <img src={logo} alt="Mijash" className="loading-logo" />
-            </motion.div>
-            <motion.div
-              className="loading-text"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4, ease: [0.76, 0, 0.24, 1] }}
-            >
-              MIJASH SUNAR
-            </motion.div>
-            <motion.div
-              className="loading-bar"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="intro-bg-layer intro-bg-1"
+              animate={{ x: px * 0.8, y: py * 0.8 }}
+              transition={{ type: 'spring', stiffness: 40, damping: 25 }}
             />
             <motion.div
-              className="loading-sub"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
-              Full Stack Developer & Digital Strategist
-            </motion.div>
+              className="intro-bg-layer intro-bg-2"
+              animate={{ x: -px * 1.2, y: -py * 1.2 }}
+              transition={{ type: 'spring', stiffness: 35, damping: 20 }}
+            />
+            <motion.div
+              className="intro-bg-layer intro-bg-3"
+              animate={{ x: px * 0.5, y: -py * 0.6 }}
+              transition={{ type: 'spring', stiffness: 30, damping: 30 }}
+            />
+
+            {/* Floating particles reacting to mouse */}
+            <div className="intro-particles">
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className={`intro-particle intro-particle-${i + 1}`}
+                  animate={{
+                    x: px * (0.3 + i * 0.15) * (i % 2 === 0 ? 1 : -1),
+                    y: py * (0.3 + i * 0.15) * (i % 2 === 0 ? -1 : 1),
+                  }}
+                  transition={{ type: 'spring', stiffness: 50, damping: 20 }}
+                />
+              ))}
+            </div>
+
+            {/* Content */}
+            <div className="intro-content">
+              {/* Animated MS Logo */}
+              <motion.div
+                initial={{ scale: 0.3, opacity: 0, filter: 'blur(20px)' }}
+                animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+                transition={{ duration: 0.7, ease: EASE_CINEMA }}
+              >
+                <MSLogo size="lg" animate={true} />
+              </motion.div>
+
+              {/* Tagline */}
+              <motion.div
+                className="intro-tagline"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5, ease: EASE_CINEMA }}
+              >
+                You're about to discover
+              </motion.div>
+
+              {/* Name reveal */}
+              <motion.h1
+                className="intro-name"
+                initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 0.6, delay: 0.8, ease: EASE_CINEMA }}
+              >
+                Mijash <span className="intro-name-accent">Sunar</span>
+              </motion.h1>
+
+              {/* Role */}
+              <motion.div
+                className="intro-role"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.1, ease: EASE_CINEMA }}
+              >
+                Full Stack Developer & Digital Strategist
+              </motion.div>
+
+              {/* Progress bar */}
+              <motion.div
+                className="intro-progress-track"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 1.3 }}
+              >
+                <motion.div
+                  className="intro-progress-bar"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 1.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                />
+              </motion.div>
+
+              {/* Call to action */}
+              <motion.div
+                className="intro-cta"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1] }}
+                transition={{ duration: 1.5, delay: 1.4, repeat: Infinity, repeatDelay: 0.8 }}
+              >
+                <ChevronDown size={18} />
+                <span>Scroll or click to enter</span>
+                <ChevronDown size={18} />
+              </motion.div>
+            </div>
+
+            {/* Corner decorations */}
+            <motion.div
+              className="intro-corner intro-corner-tl"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 0.3, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.6, ease: EASE_CINEMA }}
+            />
+            <motion.div
+              className="intro-corner intro-corner-br"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 0.3, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.8, ease: EASE_CINEMA }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Ambient orbs with enhanced animation */}
+      {/* Ambient orbs */}
       <div className="orb orb-1" />
       <div className="orb orb-2" />
       <div className="orb orb-3" />
       <div className="grain" />
 
-      {/* ===== HEADER with entrance animation ===== */}
+      {/* ===== HEADER ===== */}
       <motion.header
         className="site-header"
         initial={{ y: -80, opacity: 0 }}
-        animate={!loading ? { y: 0, opacity: 1 } : { y: -80, opacity: 0 }}
-        transition={{ duration: 0.7, delay: 0.3, ease: [0.76, 0, 0.24, 1] }}
+        animate={isDone ? { y: 0, opacity: 1 } : { y: -80, opacity: 0 }}
+        transition={{ duration: 0.7, delay: 0.3, ease: EASE_CINEMA }}
       >
         <motion.div
           className="header-brand"
@@ -183,13 +327,7 @@ function App() {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
         >
-          <motion.img
-            src={logo}
-            alt="Mijash"
-            className="header-logo"
-            whileHover={{ rotate: 360 }}
-            transition={{ duration: 0.6 }}
-          />
+          <MSLogo size="sm" />
           MIJASH SUNAR
         </motion.div>
 
@@ -218,7 +356,6 @@ function App() {
         </nav>
 
         <div className="header-actions">
-          {/* Mobile menu toggle */}
           <motion.button
             className="mobile-menu-toggle"
             onClick={() => setMobileNav(!mobileNav)}
@@ -268,7 +405,7 @@ function App() {
                   initial={{ x: -40, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: 40, opacity: 0 }}
-                  transition={{ duration: 0.35, delay: i * 0.06, ease: [0.76, 0, 0.24, 1] }}
+                  transition={{ duration: 0.35, delay: i * 0.06, ease: EASE_CINEMA }}
                   whileHover={{ x: 10 }}
                 >
                   <span className="mobile-nav-num">0{i + 1}</span>
@@ -280,12 +417,12 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* ===== NAV DOTS with enhanced animations ===== */}
+      {/* ===== NAV DOTS ===== */}
       <motion.div
         id="progress"
         initial={{ x: 30, opacity: 0 }}
-        animate={!loading ? { x: 0, opacity: 1 } : { x: 30, opacity: 0 }}
-        transition={{ duration: 0.6, delay: 0.5, ease: [0.76, 0, 0.24, 1] }}
+        animate={isDone ? { x: 0, opacity: 1 } : { x: 30, opacity: 0 }}
+        transition={{ duration: 0.6, delay: 0.5, ease: EASE_CINEMA }}
       >
         {LABELS.map((l, i) => (
           <motion.div
@@ -322,7 +459,7 @@ function App() {
       <motion.div
         className="section-counter"
         initial={{ opacity: 0 }}
-        animate={!loading ? { opacity: 1 } : { opacity: 0 }}
+        animate={isDone ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.7 }}
       >
         <AnimatePresence mode="wait">
@@ -332,7 +469,7 @@ function App() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -20, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.3, ease: EASE_CINEMA }}
           >
             0{current + 1}
           </motion.span>
