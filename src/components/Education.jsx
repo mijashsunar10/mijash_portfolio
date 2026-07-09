@@ -2,11 +2,10 @@ import { motion } from 'framer-motion';
 import {
   TextReveal,
   SlideIn,
-  ScaleReveal,
   ParallaxLayer,
   FloatingElement,
-  ease,
 } from './AnimationUtils';
+import { ease } from './AnimationPresets';
 
 const education = [
   {

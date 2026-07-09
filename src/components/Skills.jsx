@@ -4,12 +4,10 @@ import {
   TextReveal,
   SlideIn,
   TiltCard,
-  StaggerContainer,
-  staggerItemScale,
   ParallaxLayer,
   FloatingElement,
-  ease,
 } from './AnimationUtils';
+import { ease } from './AnimationPresets';
 
 const skillData = [
   {

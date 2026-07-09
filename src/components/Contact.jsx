@@ -4,13 +4,12 @@ import { motion } from 'framer-motion';
 import {
   TextReveal,
   CharReveal,
-  SlideIn,
   ScaleReveal,
   MagneticButton,
   FloatingElement,
   ParallaxLayer,
-  ease,
 } from './AnimationUtils';
+import { ease } from './AnimationPresets';
 
 const Contact = ({ isActive = false }) => {
   const [note, setNote] = useState('');
@@ -51,6 +50,7 @@ const Contact = ({ isActive = false }) => {
         setNote("Error: " + (data.message || "Failed to send."));
       }
     } catch (error) {
+      console.error("Submission failed:", error);
       setNote("Something went wrong. Please try again.");
     } finally {
       setTimeout(() => setShowNote(false), 5000);

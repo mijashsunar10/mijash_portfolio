@@ -16,7 +16,6 @@ const EASE_CINEMA = [0.76, 0, 0.24, 1];
 
 function App() {
   const [current, setCurrent] = useState(0);
-  const [prev, setPrev] = useState(-1);
   const lock = useRef(false);
   const total = LABELS.length;
   const [mobileNav, setMobileNav] = useState(false);
@@ -99,7 +98,6 @@ function App() {
     i = Math.max(0, Math.min(total - 1, i));
     if (i === current) return;
     lock.current = true;
-    setPrev(current);
     setCurrent(i);
     setTimeout(() => { lock.current = false; }, 820);
   }, [current, total]);

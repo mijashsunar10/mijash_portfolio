@@ -5,14 +5,13 @@ import {
   TextReveal,
   CharReveal,
   SlideIn,
-  ScaleReveal,
   FloatingElement,
   ParallaxLayer,
   MagneticButton,
   AnimatedCounter,
   LineReveal,
-  ease,
 } from './AnimationUtils';
+import { ease } from './AnimationPresets';
 
 const Hero = ({ onContact, isActive = false }) => (
   <div className="scene-inner">

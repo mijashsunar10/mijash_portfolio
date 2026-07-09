@@ -5,12 +5,11 @@ import {
   SlideIn,
   TiltCard,
   StaggerContainer,
-  staggerItemFromRight,
   ParallaxLayer,
   FloatingElement,
   LineReveal,
-  ease,
 } from './AnimationUtils';
+import { ease, staggerItemFromRight } from './AnimationPresets';
 
 const aboutCards = [
   { icon: <Code2 size={22} />, title: 'Full Stack Developer', desc: 'Laravel, React, MERN Stack, WordPress — building end-to-end scalable web applications.' },

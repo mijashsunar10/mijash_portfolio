@@ -8,8 +8,8 @@ import {
   ParallaxLayer,
   FloatingElement,
   MagneticButton,
-  ease,
 } from './AnimationUtils';
+import { ease } from './AnimationPresets';
 
 import imgFewa from '../assets/Hospitalfewa.png';
 import imgNiti from '../assets/nitiacademylogo.png';
@@ -25,100 +25,100 @@ const projects = [
   {
     tag: 'Healthcare · Laravel',
     name: 'Fewa City Hospital',
-    url: '#',
+    url: 'https://fch.com.np',
     image: imgFewa,
     desc: 'A comprehensive healthcare portal featuring online appointment scheduling, doctor profiles, and dynamic service listings.',
   },
   {
     tag: 'Education · IT Company',
     name: 'Niti Academy',
-    url: '#',
+    url: 'https://nitiacademy.edu.np',
     image: imgNiti,
     desc: 'An educational platform providing professional IT course listings, digital marketing materials, and student enrollment systems.',
   },
   {
     tag: 'Tourism · Laravel',
     name: 'Nepalese Trekking',
-    url: '#',
+    url: 'https://nepalesetrekking.com',
     image: imgTrekking,
     desc: 'A dynamic tourism portal designed to showcase mountain trekking itineraries, travel packages, and travel guides in Nepal.',
   },
   {
     tag: 'Association · WordPress',
     name: 'Gamma Pokhara',
-    url: '#',
+    url: '',
     image: imgGama,
     desc: 'An association platform designed for the Gandaki Automobile Association featuring membership listings and news.',
   },
   {
     tag: 'Education · School',
     name: 'Blooming Buds Academy',
-    url: '#',
+    url: '',
     desc: 'A school website featuring academic programs, news, event notices, and student portals for a premium educational institution.',
   },
   {
     tag: 'Education · School',
     name: 'Dhungesanghu Boarding School',
-    url: '#',
+    url: '',
     desc: 'A school website featuring academic schedules, admissions information, and interactive gallery systems.',
   },
   {
     tag: 'Education · School',
     name: 'Balkalyan High School',
-    url: '#',
+    url: '',
     image: imgBalkalyan,
     desc: 'A school website displaying dynamic notifications, events, staff directories, and academic resources.',
   },
   {
     tag: 'Education · School',
     name: 'Kantipur Academy',
-    url: '#',
+    url: '',
     image: imgKantipur,
     desc: 'An educational landing page with student admission forms, curriculum highlights, and course databases.',
   },
   {
     tag: 'Education · School',
     name: 'Rainbow Academic Homes',
-    url: '#',
+    url: '',
     image: imgRah,
     desc: 'A secondary school platform with information portals for parents, course structures, and event announcements.',
   },
   {
     tag: 'Business · E-commerce',
     name: 'Monika Tyre Suppliers',
-    url: '#',
+    url: '',
     desc: 'A business catalogue and inventory page displaying product specifications and distributor contact channels.',
   },
   {
     tag: 'Education · School',
     name: 'Jyotikunj Secondary School',
-    url: '#',
+    url: '',
     image: imgJyotikunj,
     desc: 'A portal showcasing curriculum details, dynamic event calendars, and school announcement boards.',
   },
   {
     tag: 'Education · Bakery',
     name: 'School of Bakery & Pastry',
-    url: '#',
+    url: '',
     image: imgBakery,
     desc: 'A culinary training portal featuring course timetables, instructor bios, and interactive pastry workshop registrations.',
   },
   {
     tag: 'Personal · Portfolio',
     name: 'Raghunath Wagle',
-    url: '#',
+    url: '',
     desc: 'A personal portfolio site featuring research publications, consulting history, and contact forms.',
   },
   {
     tag: 'Personal · Portfolio',
     name: 'Madhab Pokharel',
-    url: '#',
+    url: '',
     desc: 'A personal developer portfolio showcasing web development projects, skills, and client testimonials.',
   },
 ];
 
 // Unique card entrance patterns for each card position
-const getCardEntrance = (i, total) => {
+const getCardEntrance = (i) => {
   const patterns = [
     { y: 60, x: -20, rotate: -4, scale: 0.85 },
     { y: -40, x: 10, rotate: 2, scale: 0.88 },
@@ -136,22 +136,19 @@ const Portfolio = ({ isActive = false }) => {
 
   useEffect(() => {
     const handleResize = () => {
+      let size = 5;
       if (window.innerWidth < 768) {
-        setPageSize(1);
+        size = 1;
       } else if (window.innerWidth < 1024) {
-        setPageSize(3);
-      } else {
-        setPageSize(5);
+        size = 3;
       }
+      setPageSize(size);
+      setCurrentPage(0);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [pageSize]);
 
   const totalPages = Math.ceil(projects.length / pageSize);
   const currentProjects = projects.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
@@ -297,17 +294,23 @@ const Portfolio = ({ isActive = false }) => {
                     </div>
                     <p className="project-desc">{p.desc}</p>
                     <div className="portfolio-card-footer">
-                      <motion.a
-                        className="portfolio-visit-link"
-                        href={p.url || '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ x: 4, gap: '10px' }}
-                        transition={{ duration: 0.25 }}
-                      >
-                        <span>Explore Project</span>
-                        <ArrowRight size={14} className="arrow-icon" />
-                      </motion.a>
+                      {p.url ? (
+                        <motion.a
+                          className="portfolio-visit-link"
+                          href={p.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ x: 4, gap: '10px' }}
+                          transition={{ duration: 0.25 }}
+                        >
+                          <span>Explore Project</span>
+                          <ArrowRight size={14} className="arrow-icon" />
+                        </motion.a>
+                      ) : (
+                        <span className="portfolio-internal-badge">
+                          Internal System
+                        </span>
+                      )}
                     </div>
                   </div>
                 </TiltCard>
