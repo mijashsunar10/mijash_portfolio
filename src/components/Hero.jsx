@@ -135,7 +135,8 @@ const Hero = ({ onContact, isActive = false }) => (
         <motion.img
           className="hero-image"
           src={profileImg}
-          alt="Mijash Sunar"
+          alt="Mijash Sunar - Web Developer in Pokhara"
+          fetchPriority="high"
           width="380"
           height="380"
           style={{ objectFit: 'cover' }}

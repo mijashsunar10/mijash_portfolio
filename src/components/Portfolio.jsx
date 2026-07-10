@@ -270,8 +270,9 @@ const Portfolio = ({ isActive = false }) => {
                       {p.image ? (
                         <motion.img
                           src={p.image}
-                          alt={p.name}
+                          alt={`${p.name} website developed by Mijash Sunar`}
                           className="portfolio-logo-img"
+                          loading="lazy"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                           transition={{ duration: 0.3 }}
                         />
