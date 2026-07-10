@@ -75,7 +75,7 @@ const Hero = ({ onContact, isActive = false }) => (
 
       {/* Description with word reveal */}
       <TextReveal
-        text="Technology professional and digital strategist with 5+ years building scalable web solutions, driving digital growth, and mentoring future IT professionals from Pokhara, Nepal."
+        text="Technology professional, digital strategist, and web developer in Pokhara with 5+ years building scalable web solutions, driving digital growth, and mentoring future IT professionals."
         isActive={isActive}
         delay={1.1}
         className="hero-desc"
