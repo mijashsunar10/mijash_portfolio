@@ -49,6 +49,17 @@ function App() {
     }
   }, [introPhase]);
 
+  // Cooldown lock to prevent scroll/swipe bleed to second page after intro ends
+  useEffect(() => {
+    if (introPhase === 'done') {
+      lock.current = true;
+      const t = setTimeout(() => {
+        lock.current = false;
+      }, 1200);
+      return () => clearTimeout(t);
+    }
+  }, [introPhase]);
+
   // Mouse tracking for parallax on intro
   useEffect(() => {
     if (introPhase === 'done') return;
