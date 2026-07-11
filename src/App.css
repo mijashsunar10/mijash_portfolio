@@ -426,29 +426,68 @@
 /* ============ RESPONSIVE ============ */
 @media(max-width:960px){
   .header-nav{display:none;}
-  .hero-scene .scene-inner{flex-direction:column;text-align:center;padding:4vh 5vw 0;gap:2vh;}
+  .scene-inner {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    padding: 6vh 6vw 100px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hero-scene .scene-inner{text-align:center;gap:2vh;}
   .hero-content{max-width:100%;}
   .hero-greeting{justify-content:center;}
   .hero-titles{justify-content:center;}
   .hero-desc{max-width:100%;}
   .hero-actions{justify-content:center;}
-  .hero-image{width:clamp(180px,36vw,260px);}
+  .hero-image{width:clamp(180px,36vw,260px);margin-top:20px;}
   .hero-stats{justify-content:center;}
-  .about-scene .scene-inner{flex-direction:column;padding:4vh 5vw 0;align-items:center;}
   .about-right{flex:auto;width:100%;flex-direction:row;flex-wrap:wrap;}
   .about-card{flex:1 1 calc(50% - 7px);}
-  .skill-categories{grid-template-columns:1fr 1fr;}
+  .skill-categories{grid-template-columns:1fr 1fr;width:100%;}
   .work-grid{grid-template-columns:repeat(3, 1fr); max-width: 88vw;}
   .contact-links{flex-direction:column;align-items:center;}
   #progress{right:12px;}
+  .timeline {
+    max-width: 92vw !important;
+    width: 92vw !important;
+  }
 }
 @media(max-width:600px){
   .hero-stats{gap:20px;}
-  .skill-categories{grid-template-columns:1fr;max-height:58vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .skill-categories{grid-template-columns:1fr !important;max-height:none !important;overflow-y:visible !important;}
   .work-grid{grid-template-columns: 1fr; gap: 16px;}
   .browser-frame{height: 16vh; min-height: 110px;}
   .about-right{flex-direction:column;}
   .about-card{flex:auto;}
+  .site-header {
+    padding: 0 16px !important;
+  }
+  .header-brand {
+    font-size: 14px !important;
+  }
+  .glass-form {
+    padding: 16px !important;
+  }
+  .resume-modal-overlay {
+    padding: 8px !important;
+  }
+  .resume-modal-container {
+    border-radius: 12px !important;
+  }
+  .resume-sheet {
+    padding: 16px 20px !important;
+  }
+}
+@media(max-width:480px){
+  .header-cta {
+    display: none !important;
+  }
+  .header-actions {
+    gap: 8px !important;
+  }
 }
 @media(prefers-reduced-motion:reduce){.scene{transition:opacity 0.4s ease !important;}.work-card,.hero-image{animation:none !important;}}
 
