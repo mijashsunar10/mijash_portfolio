@@ -155,11 +155,12 @@ const Contact = ({ isActive = false }) => {
           <motion.select
             name="cf-type"
             defaultValue=""
+            required
             initial={{ x: -30, opacity: 0 }}
             animate={isActive ? { x: 0, opacity: 1 } : { x: -30, opacity: 0 }}
             transition={{ duration: 0.5, delay: 1.4, ease: ease.cinematic }}
           >
-            <option value="">Project type</option>
+            <option value="" disabled>Project type</option>
             <option value="Website Development">Website Development</option>
             <option value="Full Stack Project">Full Stack Project</option>
             <option value="Digital Marketing">Digital Marketing</option>
@@ -171,6 +172,7 @@ const Contact = ({ isActive = false }) => {
           <motion.textarea
             name="cf-message"
             placeholder="Tell me about your project"
+            required
             initial={{ y: 20, opacity: 0 }}
             animate={isActive ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
             transition={{ duration: 0.5, delay: 1.5, ease: ease.cinematic }}

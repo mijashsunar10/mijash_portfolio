@@ -1,4 +1,4 @@
-import { Mail, Phone } from 'lucide-react';
+import { Mail, Phone, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import profileImg from '../assets/mijash.jpeg';
 import {
@@ -13,7 +13,7 @@ import {
 } from './AnimationUtils';
 import { ease } from './AnimationPresets';
 
-const Hero = ({ onContact, isActive = false }) => (
+const Hero = ({ onContact, onViewResume, isActive = false }) => (
   <div className="scene-inner">
     <div className="depth-grid" />
     
@@ -87,6 +87,14 @@ const Hero = ({ onContact, isActive = false }) => (
         <MagneticButton className="btn-primary" onClick={onContact} strength={0.25}>
           <Mail size={14} /> Contact Me
         </MagneticButton>
+        <motion.button
+          className="btn-ghost"
+          onClick={onViewResume}
+          whileHover={{ scale: 1.03, borderColor: 'rgba(124,92,255,0.5)', boxShadow: '0 0 16px rgba(124,92,255,0.15)' }}
+          whileTap={{ scale: 0.97 }}
+        >
+          <FileText size={14} /> View CV
+        </motion.button>
         <motion.a
           className="btn-ghost"
           href="tel:+9779826115361"
@@ -102,8 +110,8 @@ const Hero = ({ onContact, isActive = false }) => (
         <LineReveal isActive={isActive} delay={1.9} className="hero-stat-line" />
         <div className="hero-stats">
           {[
-            { num: 5, suffix: '+', label: 'Years Experience' },
-            { num: 14, suffix: '+', label: 'Projects Delivered' },
+            { num: 3, suffix: '+', label: 'Years Experience' },
+            { num: 30, suffix: '+', label: 'Projects Delivered' },
             { num: 100, suffix: '+', label: 'Students Trained' },
           ].map((stat, i) => (
             <motion.div

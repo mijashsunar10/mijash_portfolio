@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Search, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   TextReveal,
@@ -133,6 +133,8 @@ const Portfolio = ({ isActive = false }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [direction, setDirection] = useState(0); // -1 prev, 1 next
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const handleResize = () => {
@@ -150,8 +152,26 @@ const Portfolio = ({ isActive = false }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const totalPages = Math.ceil(projects.length / pageSize);
-  const currentProjects = projects.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+  // Filter projects dynamically
+  const filteredProjects = projects.filter(p => {
+    const matchesCategory = 
+      selectedCategory === 'All' || 
+      (selectedCategory === 'Laravel' && p.tag.toLowerCase().includes('laravel')) ||
+      (selectedCategory === 'React' && (p.tag.toLowerCase().includes('react') || p.tag.toLowerCase().includes('mern') || p.tag.toLowerCase().includes('it company'))) ||
+      (selectedCategory === 'WordPress' && p.tag.toLowerCase().includes('wordpress')) ||
+      (selectedCategory === 'Education' && (p.tag.toLowerCase().includes('school') || p.tag.toLowerCase().includes('bakery') || p.tag.toLowerCase().includes('academy') || p.tag.toLowerCase().includes('education'))) ||
+      (selectedCategory === 'Personal' && (p.tag.toLowerCase().includes('personal') || p.tag.toLowerCase().includes('portfolio')));
+    
+    const matchesSearch = 
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.tag.toLowerCase().includes(searchTerm.toLowerCase());
+      
+    return matchesCategory && matchesSearch;
+  });
+
+  const totalPages = Math.ceil(filteredProjects.length / pageSize);
+  const currentProjects = filteredProjects.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
 
   const goToPage = useCallback((idx) => {
     setDirection(idx > currentPage ? 1 : -1);
@@ -205,120 +225,192 @@ const Portfolio = ({ isActive = false }) => {
         />
       </div>
 
+      {/* Search & Filters Bar */}
+      <div className="portfolio-controls" style={{ zIndex: 3 }}>
+        <div className="portfolio-filters">
+          {[
+            { id: 'All', label: 'All' },
+            { id: 'Laravel', label: 'Laravel / PHP' },
+            { id: 'React', label: 'React / MERN' },
+            { id: 'WordPress', label: 'WordPress' },
+            { id: 'Education', label: 'Education' },
+            { id: 'Personal', label: 'Personal / Portfolios' }
+          ].map(cat => (
+            <button
+              key={cat.id}
+              className={`filter-btn ${selectedCategory === cat.id ? 'active' : ''}`}
+              onClick={() => {
+                setSelectedCategory(cat.id);
+                setCurrentPage(0);
+              }}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="portfolio-search-wrap">
+          <input
+            type="text"
+            className="portfolio-search-input"
+            placeholder="Search projects..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(0);
+            }}
+          />
+          <Search size={14} className="portfolio-search-icon" />
+          {searchTerm && (
+            <button 
+              className="portfolio-search-clear" 
+              onClick={() => {
+                setSearchTerm('');
+                setCurrentPage(0);
+              }}
+              title="Clear search"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* Cards with AnimatePresence for page transitions */}
       <AnimatePresence mode="wait" custom={direction}>
-        <motion.div
-          className="work-grid"
-          key={currentPage}
-          custom={direction}
-          variants={pageVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.5, ease: ease.cinematic }}
-          style={{ zIndex: 2 }}
-        >
-          {currentProjects.map((p, i) => {
-            const entrance = getCardEntrance(i, currentProjects.length);
-            return (
-              <motion.div
-                key={`${currentPage}-${i}`}
-                initial={{
-                  y: entrance.y,
-                  x: entrance.x,
-                  rotate: entrance.rotate,
-                  scale: entrance.scale,
-                  opacity: 0,
-                  filter: 'blur(8px)',
-                }}
-                animate={
-                  isActive
-                    ? { y: 0, x: 0, rotate: 0, scale: 1, opacity: 1, filter: 'blur(0px)' }
-                    : {
-                        y: entrance.y,
-                        x: entrance.x,
-                        rotate: entrance.rotate,
-                        scale: entrance.scale,
-                        opacity: 0,
-                        filter: 'blur(8px)',
-                      }
-                }
-                transition={{
-                  duration: 0.65,
-                  delay: 0.15 + i * 0.1,
-                  ease: ease.cinematic,
-                }}
-              >
-                <TiltCard
-                  className="work-card"
-                  intensity={10}
-                  glowColor="rgba(31,217,160,0.12)"
-                  scale={1.04}
+        {filteredProjects.length === 0 ? (
+          <motion.div
+            className="no-projects-found"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            style={{ 
+              zIndex: 2, 
+              color: 'var(--ink-dim)', 
+              textAlign: 'center', 
+              padding: '60px',
+              fontFamily: 'var(--sans)',
+              fontSize: '14.5px' 
+            }}
+          >
+            No projects found matching the criteria. Try adjusting your filters or search term.
+          </motion.div>
+        ) : (
+          <motion.div
+            className="work-grid"
+            key={currentPage}
+            custom={direction}
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5, ease: ease.cinematic }}
+            style={{ zIndex: 2 }}
+          >
+            {currentProjects.map((p, i) => {
+              const entrance = getCardEntrance(i, currentProjects.length);
+              return (
+                <motion.div
+                  key={`${currentPage}-${i}`}
+                  initial={{
+                    y: entrance.y,
+                    x: entrance.x,
+                    rotate: entrance.rotate,
+                    scale: entrance.scale,
+                    opacity: 0,
+                    filter: 'blur(8px)',
+                  }}
+                  animate={
+                    isActive
+                      ? { y: 0, x: 0, rotate: 0, scale: 1, opacity: 1, filter: 'blur(0px)' }
+                      : {
+                          y: entrance.y,
+                          x: entrance.x,
+                          rotate: entrance.rotate,
+                          scale: entrance.scale,
+                          opacity: 0,
+                          filter: 'blur(8px)',
+                        }
+                  }
+                  transition={{
+                    duration: 0.65,
+                    delay: 0.15 + i * 0.1,
+                    ease: ease.cinematic,
+                  }}
                 >
-                  {/* Logo Container */}
-                  <div className="portfolio-logo-wrap">
-                    <motion.div
-                      className="portfolio-logo-container"
-                      initial={{ scale: 0.5, opacity: 0, rotate: -15 }}
-                      animate={isActive ? { scale: 1, opacity: 1, rotate: 0 } : { scale: 0.5, opacity: 0, rotate: -15 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 0.3 + i * 0.1,
-                        ease: ease.elastic,
-                      }}
-                    >
-                      {p.image ? (
-                        <motion.img
-                          src={p.image}
-                          alt={`${p.name} website developed by Mijash Sunar`}
-                          className="portfolio-logo-img"
-                          loading="lazy"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      ) : (
-                        <motion.div
-                          className="portfolio-logo-fallback"
-                          whileHover={{ scale: 1.15 }}
-                        >
-                          {p.name.charAt(0)}
-                        </motion.div>
-                      )}
-                    </motion.div>
-                  </div>
+                  <TiltCard
+                    className="work-card"
+                    intensity={10}
+                    glowColor="rgba(31,217,160,0.12)"
+                    scale={1.04}
+                  >
+                    {/* Logo Container */}
+                    <div className="portfolio-logo-wrap">
+                      <motion.div
+                        className="portfolio-logo-container"
+                        initial={{ scale: 0.5, opacity: 0, rotate: -15 }}
+                        animate={isActive ? { scale: 1, opacity: 1, rotate: 0 } : { scale: 0.5, opacity: 0, rotate: -15 }}
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.3 + i * 0.1,
+                          ease: ease.elastic,
+                        }}
+                      >
+                        {p.image ? (
+                          <motion.img
+                            src={p.image}
+                            alt={`${p.name} website developed by Mijash Sunar`}
+                            className="portfolio-logo-img"
+                            loading="lazy"
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        ) : (
+                          <motion.div
+                            className="portfolio-logo-fallback-wrap"
+                            whileHover={{ scale: 1.15 }}
+                          >
+                            <div className="portfolio-logo-fallback">
+                              {p.name.split(' ').map(w => w.charAt(0)).slice(0, 2).join('')}
+                            </div>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    </div>
 
-                  {/* Project Details */}
-                  <div className="project-details">
-                    <div className="project-header">
-                      <span className="portfolio-card-tag">{p.tag}</span>
-                      <h3 className="project-title">{p.name}</h3>
+                    {/* Project Details */}
+                    <div className="project-details">
+                      <div className="project-header">
+                        <span className="portfolio-card-tag">{p.tag}</span>
+                        <h3 className="project-title">{p.name}</h3>
+                      </div>
+                      <p className="project-desc">{p.desc}</p>
+                      <div className="portfolio-card-footer">
+                        {p.url ? (
+                          <motion.a
+                            className="portfolio-visit-link"
+                            href={p.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ x: 4, gap: '10px' }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            <span>Explore Project</span>
+                            <ArrowRight size={14} className="arrow-icon" />
+                          </motion.a>
+                        ) : (
+                          <span className="portfolio-internal-badge">
+                            Internal System
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <p className="project-desc">{p.desc}</p>
-                    <div className="portfolio-card-footer">
-                      {p.url ? (
-                        <motion.a
-                          className="portfolio-visit-link"
-                          href={p.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ x: 4, gap: '10px' }}
-                          transition={{ duration: 0.25 }}
-                        >
-                          <span>Explore Project</span>
-                          <ArrowRight size={14} className="arrow-icon" />
-                        </motion.a>
-                      ) : (
-                        <span className="portfolio-internal-badge">
-                          Internal System
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </TiltCard>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                  </TiltCard>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* Pagination Controls */}

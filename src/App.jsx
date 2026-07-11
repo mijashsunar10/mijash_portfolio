@@ -10,6 +10,7 @@ import Education from './components/Education';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import MSLogo from './components/MSLogo';
+import ResumeModal from './components/ResumeModal';
 
 const LABELS = ['Home', 'About', 'Skills', 'Work', 'Experience', 'Education', 'Contact'];
 const EASE_CINEMA = [0.76, 0, 0.24, 1];
@@ -23,6 +24,8 @@ function App() {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'dark';
   });
+
+  const [showResume, setShowResume] = useState(false);
 
   // ===== CINEMATIC INTRO STATE =====
   const [introPhase, setIntroPhase] = useState('intro'); // 'intro' | 'ready' | 'done'
@@ -110,13 +113,30 @@ function App() {
     return { transform: `scale(${1 + Math.min(-off, 3) * 0.3}) translateY(${Math.max(-off * -8, -24)}px)`, opacity: 0, zIndex: z, pointerEvents: 'none' };
   };
 
+  // Dynamic scroll helper to find the first scrollable parent container
+  const findScrollableParent = useCallback((el) => {
+    if (!el) return null;
+    let s = el;
+    while (s && s !== window && s !== document.body) {
+      if (s.scrollHeight > s.clientHeight) {
+        const style = window.getComputedStyle(s);
+        const overflowY = style.overflowY;
+        if (overflowY === 'auto' || overflowY === 'scroll') {
+          return s;
+        }
+      }
+      s = s.parentNode;
+    }
+    return null;
+  }, []);
+
   // Wheel handler
   useEffect(() => {
     if (introPhase !== 'done') return;
     let wl = false;
     const h = (e) => {
       if (wl || Math.abs(e.deltaY) < 5) return;
-      const s = e.target?.closest?.('.work-grid,.timeline,.skill-categories');
+      const s = findScrollableParent(e.target);
       if (s) {
         if (e.deltaY > 0 && s.scrollTop + s.clientHeight < s.scrollHeight - 4) return;
         if (e.deltaY < 0 && s.scrollTop > 2) return;
@@ -127,7 +147,7 @@ function App() {
     };
     window.addEventListener('wheel', h, { passive: true });
     return () => window.removeEventListener('wheel', h);
-  }, [current, goTo, introPhase]);
+  }, [current, goTo, introPhase, findScrollableParent]);
 
   // Touch handler
   useEffect(() => {
@@ -137,7 +157,7 @@ function App() {
     const te = (e) => {
       if (sy === null) return;
       const d = sy - e.changedTouches[0].clientY;
-      const s = st?.closest?.('.work-grid,.timeline,.skill-categories');
+      const s = findScrollableParent(st);
       if (s) {
         if (d > 40 && s.scrollTop + s.clientHeight < s.scrollHeight - 4) { sy = null; return; }
         if (d < -40 && s.scrollTop > 2) { sy = null; return; }
@@ -148,7 +168,7 @@ function App() {
     window.addEventListener('touchstart', ts, { passive: true });
     window.addEventListener('touchend', te, { passive: true });
     return () => { window.removeEventListener('touchstart', ts); window.removeEventListener('touchend', te); };
-  }, [current, goTo, introPhase]);
+  }, [current, goTo, introPhase, findScrollableParent]);
 
   // Keyboard handler
   useEffect(() => {
@@ -163,7 +183,7 @@ function App() {
 
   const isDone = introPhase === 'done';
   const scenes = [
-    <Hero key="h" onContact={() => goTo(6)} isActive={isDone && current === 0} />,
+    <Hero key="h" onContact={() => goTo(6)} onViewResume={() => setShowResume(true)} isActive={isDone && current === 0} />,
     <About key="a" isActive={current === 1} />,
     <Skills key="s" isActive={current === 2} />,
     <Portfolio key="p" isActive={current === 3} />,
@@ -427,7 +447,13 @@ function App() {
             className={`dot-wrap ${i === current ? 'active' : ''}`}
             key={i}
             onClick={() => goTo(i)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                goTo(i);
+              }
+            }}
             role="button"
+            tabIndex={0}
             aria-label={`Go to ${l}`}
             whileHover={{ x: -4 }}
           >
@@ -475,6 +501,13 @@ function App() {
         <span className="counter-sep">/</span>
         <span className="counter-total">0{total}</span>
       </motion.div>
+
+      {/* ===== RESUME MODAL ===== */}
+      <AnimatePresence>
+        {showResume && (
+          <ResumeModal onClose={() => setShowResume(false)} />
+        )}
+      </AnimatePresence>
     </>
   );
 }
