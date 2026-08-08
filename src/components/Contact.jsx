@@ -99,7 +99,7 @@ const Contact = ({ isActive = false }) => {
       />
 
       <TextReveal
-        text="Available for website development, full-stack projects, digital marketing, SEO, and training programs."
+        text="Available for website development, full-stack projects, and training programs."
         isActive={isActive}
         delay={0.5}
         className="cta-sub"
@@ -163,8 +163,6 @@ const Contact = ({ isActive = false }) => {
             <option value="" disabled>Project type</option>
             <option value="Website Development">Website Development</option>
             <option value="Full Stack Project">Full Stack Project</option>
-            <option value="Digital Marketing">Digital Marketing</option>
-            <option value="SEO">SEO</option>
             <option value="Training">Training / Mentorship</option>
             <option value="Other">Other</option>
           </motion.select>

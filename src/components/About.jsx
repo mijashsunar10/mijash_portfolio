@@ -12,10 +12,10 @@ import {
 import { ease, staggerItemFromRight } from './AnimationPresets';
 
 const aboutCards = [
-  { icon: <Code2 size={22} />, title: 'Full Stack Developer', desc: 'Laravel, React, MERN Stack, WordPress — building end-to-end scalable web applications.' },
-  { icon: <Megaphone size={22} />, title: 'Digital Marketing Expert', desc: 'Strategy-driven campaigns that improve online visibility and deliver measurable growth.' },
-  { icon: <Search size={22} />, title: 'SEO Expert', desc: 'Technical & on-page SEO to help businesses rank higher and reach the right audience.' },
-  { icon: <GraduationCap size={22} />, title: 'Senior Instructor', desc: 'Teaching PHP, Laravel, MERN Stack, and Digital Marketing to the next generation of developers.' },
+  { icon: <Code2 size={22} />, title: 'MERN Stack & Next.js', desc: 'Building modern, scalable, and high-performance web applications.' },
+  { icon: <Megaphone size={22} />, title: 'PHP & Laravel Developer', desc: 'Experienced in developing diverse web applications with PHP, Laravel, and WordPress.' },
+  { icon: <Search size={22} />, title: 'Responsive Web Design', desc: 'Creating responsive, user-friendly interfaces with clean, maintainable code.' },
+  { icon: <GraduationCap size={22} />, title: 'Technical Instructor', desc: 'Teaching MERN Stack, PHP, Laravel, WordPress, and Digital Marketing.' },
 ];
 
 const About = ({ isActive = false }) => {
@@ -54,7 +54,7 @@ const About = ({ isActive = false }) => {
 
         {/* Paragraphs with sequential text reveals */}
         <TextReveal
-          text="I am Mijash Sunar, a Web Developer, Digital Marketing Specialist, SEO Expert, and Technical Instructor based in Pokhara, Nepal, with extensive hands-on experience in building scalable web applications and developing effective digital strategies."
+          text="I am Mijash Sunar, a passionate and goal-driven Full Stack Web Developer based in Pokhara, Nepal, with strong expertise in the MERN Stack (MongoDB, Express.js, React.js, and Node.js) and Next.js, specializing in building modern, scalable, and high-performance web applications."
           isActive={isActive}
           delay={0.7}
           className="about-text"
@@ -63,7 +63,7 @@ const About = ({ isActive = false }) => {
         />
 
         <TextReveal
-          text="I specialize in modern web development technologies including Laravel, Livewire, MySQL, Blade templating, JavaScript, Node.js, React, the MERN stack, and WordPress — enabling me to design and develop high-performance and scalable digital solutions."
+          text="I focus on creating responsive, user-friendly interfaces and writing clean, maintainable code to deliver efficient digital solutions. I also have experience with PHP, Laravel, and WordPress, enabling me to work across diverse web development projects while continuously adapting to the latest technologies and industry best practices."
           isActive={isActive}
           delay={1.0}
           className="about-text"
@@ -72,7 +72,7 @@ const About = ({ isActive = false }) => {
         />
 
         <TextReveal
-          text="Alongside development, I work in digital marketing and SEO, helping businesses improve their online visibility, reach the right audience, and achieve measurable growth. I am also actively involved in technical training and mentoring, guiding students and aspiring developers in modern web development and digital technologies."
+          text="Currently pursuing my BSc. CSIT at Soch College of IT, I also work as a Senior Instructor, teaching MERN Stack, PHP & Laravel, and Digital Marketing, mentoring the next generation of developers."
           isActive={isActive}
           delay={1.3}
           className="about-text"

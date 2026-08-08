@@ -10,11 +10,11 @@ import { ease } from './AnimationPresets';
 const experiences = [
   {
     date: 'Nov 2025 — Present',
-    role: 'PHP Backend Developer',
+    role: 'Software Engineer',
     company: 'MoreTech Global · Remote',
     desc: [
-      'Working as a Senior PHP Developer on a Sweden-based project, Splitgrid — a payment solution for transactions between retailers and suppliers.',
-      'Contributing to the development of secure, scalable, and efficient financial workflows and the entire system.',
+      'Currently working as a Software Engineer on Splitgrid, a Sweden-based fintech platform that automates revenue distribution and payment workflows between retailers and suppliers.',
+      'Contributing to both frontend and backend development by building scalable features, integrating APIs, and enhancing the platform\'s performance, security, and reliability.',
     ],
   },
   {
@@ -22,22 +22,21 @@ const experiences = [
     role: 'Full Stack Developer & Senior Instructor',
     company: 'Niti Academy · Nayabazar, Pokhara',
     desc: [
-      'Developed the website for Fewa City Hospital with healthcare information, services, and appointment booking features.',
-      'Built individual websites for multiple schools in Pokhara — Blooming Buds Academy, Rainbow Academic Homes, Kantipur Academy, Balkalyan High School, and more.',
-      'Developed business websites for Monika Tyre Suppliers, Niti Academy, and GAMA Pokhara (Gandaki Automobile Association).',
-      'Instructor for Digital Marketing, WordPress, SEO, PHP & Laravel, and MERN Stack Development.',
+      'Developed responsive websites for Fewacity Hospital and Noble Hospital with seamless appointment booking functionality.',
+      'Built individual websites for multiple schools in Pokhara including Blooming Buds Academy, Rainbow Academic Homes, and more, focusing on academic info and admissions.',
+      'Developed business websites for Monika Tyre Suppliers, Niti Academy, and GAMA Pokhara with modern design and service-focused structure.',
+      'Served as Instructor for Digital Marketing, WordPress, SEO, AI Tools, MERN Stack Development, and PHP & Laravel.',
     ],
   },
   {
     date: 'Mar 2024 — Mar 2025',
-    role: 'Freelance Full Stack Developer',
+    role: 'Freelancer',
     company: 'Self Employed · Birauta, Pokhara',
     desc: [
-      'Developed a responsive tourism website for Dawn in Nepal Adventures P. Ltd with admin-managed content and booking functionality.',
-      'Built a dynamic bakery school website for School of Bakery and Pastry Technology with admin controls and email integration.',
-      'Developed a fully functional resort website for Alfanzoo Resort in Lakeside Pokhara.',
-      'Created a Mental Health & Rehabilitation platform with payments, real-time chat, Jitsi video therapy, and AI chatbot.',
-      'Developed a Laravel-based collaborative story writing platform with co-authoring, Esewa payment, and user activity tracking.',
+      'Developed responsive tourism and bakery school websites with admin-managed content, email integration, and booking functionality.',
+      'Developed a fully functional and responsive resort website for Alfanzoo Resort in Lakeside Pokhara.',
+      'Created a Mental Health & Rehabilitation platform integrating online payments, Cloudinary, real-time chat, Jitsi-based video therapy, and an AI chatbot.',
+      'Built a Laravel-based collaborative story writing platform with real-time co-authoring, Esewa payment integration, chat, and games.',
     ],
   },
 ];

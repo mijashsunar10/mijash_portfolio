@@ -13,32 +13,32 @@ const skillData = [
   {
     name: 'Frontend',
     icon: <Layout size={16} />,
-    skills: ['React JS', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind', 'Alpine JS', 'Livewire'],
+    skills: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'Bootstrap', 'HTML', 'CSS', 'Alpine JS'],
   },
   {
     name: 'Backend',
     icon: <Server size={16} />,
-    skills: ['Laravel', 'PHP', 'Node JS', 'Express JS', 'REST API', 'WordPress'],
+    skills: ['Node.js', 'Express.js', 'PHP', 'Laravel', 'REST API', 'WordPress', 'Livewire'],
   },
   {
     name: 'Database',
     icon: <Database size={16} />,
-    skills: ['MySQL', 'MongoDB', 'Postgres SQL'],
+    skills: ['MongoDB', 'MySQL', 'PostgreSQL'],
   },
   {
-    name: 'DevOps & Tools',
+    name: 'Tools & DevOps',
     icon: <Wrench size={16} />,
-    skills: ['Git', 'VS Code Extensions', 'Filezilla', 'cPanel', 'Photoshop'],
+    skills: ['Git', 'VS Code', 'cPanel', 'FileZilla', 'Postman', 'Canva'],
   },
   {
     name: 'Digital Marketing',
     icon: <Globe size={16} />,
-    skills: ['SEO', 'Content Strategy', 'Social Media', 'Paid Ads', 'Analytics'],
+    skills: ['Basic SEO', 'Web Design'],
   },
   {
-    name: 'Other',
+    name: 'Soft Skills',
     icon: <Palette size={16} />,
-    skills: ['Web Design', 'Teaching', 'Technical Writing', 'Project Management'],
+    skills: ['Problem-Solving', 'Teaching', 'Adaptability', 'Communication', 'Mentorship'],
   },
 ];
 

@@ -59,7 +59,7 @@ const Hero = ({ onContact, onViewResume, isActive = false }) => (
 
       {/* Tags with staggered scale animation */}
       <div className="hero-titles">
-        {['Full Stack Developer', 'Digital Marketing Instructor', 'SEO Expert', 'Senior Instructor'].map((tag, i) => (
+        {['Full Stack Developer', 'MERN Stack Expert', 'Laravel Developer', 'Senior Instructor'].map((tag, i) => (
           <motion.span
             className="hero-tag"
             key={tag}
@@ -75,7 +75,7 @@ const Hero = ({ onContact, onViewResume, isActive = false }) => (
 
       {/* Description with word reveal */}
       <TextReveal
-        text="Technology professional, digital strategist, and web developer in Pokhara with 5+ years building scalable web solutions, driving digital growth, and mentoring future IT professionals."
+        text="Passionate and goal-driven Full Stack Web Developer with strong expertise in the MERN Stack and Next.js, specializing in building modern, scalable, and high-performance web applications."
         isActive={isActive}
         delay={1.1}
         className="hero-desc"

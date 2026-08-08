@@ -17,8 +17,7 @@ const education = [
 ];
 
 const achievements = [
-  { title: 'Best Intern Award', desc: 'Received during 6-month internship at XDEZO Technologies, 2023.' },
-  { title: '2nd Place in Code Camp', desc: 'Achieved 2nd place demonstrating strong competitive coding skills.' },
+  { title: 'Best Intern Award', desc: 'Received the Best Intern Award during my professional career, demonstrating my dedication and continuous learning.' },
 ];
 
 const Education = ({ isActive = false }) => {

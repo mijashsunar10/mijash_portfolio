@@ -20,8 +20,16 @@ import imgKantipur from '../assets/kantipur-academy.png';
 import imgRah from '../assets/rah-logo.png';
 import imgJyotikunj from '../assets/jyoitikunj.jpg';
 import imgBakery from '../assets/schoolofbakery.png';
+import imgSplitgrid from '../assets/splitgrid-logo.png';
 
 const projects = [
+  {
+    tag: 'Fintech · PHP',
+    name: 'Splitgrid',
+    url: 'https://splitgrid.com/en/home/',
+    image: imgSplitgrid,
+    desc: 'A Sweden-based fintech platform that automates revenue distribution and payment workflows between retailers and suppliers.',
+  },
   {
     tag: 'Healthcare · Laravel',
     name: 'Fewa City Hospital',

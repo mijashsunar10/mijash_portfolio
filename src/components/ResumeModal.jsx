@@ -76,7 +76,7 @@ const ResumeModal = ({ onClose }) => {
                   <Award size={16} /> Professional Summary
                 </h2>
                 <p className="resume-text">
-                  Dynamic and result-oriented Full Stack Developer and SEO Expert with over 3 years of hands-on experience designing, developing, and deploying high-performance web applications. Demonstrated capability in leading technical mentorship programs, training developers, and formulating visibility strategies that drive measurable business growth.
+                  Dynamic and result-oriented Full Stack Developer with over 3 years of hands-on experience designing, developing, and deploying high-performance web applications. Demonstrated capability in leading technical mentorship programs and training developers.
                 </p>
               </section>
 
@@ -162,15 +162,6 @@ const ResumeModal = ({ onClose }) => {
                     <span>PostgreSQL</span>
                     <span>Git / GitHub</span>
                     <span>cPanel</span>
-                  </div>
-                </div>
-                <div className="resume-skills-group">
-                  <h4>Digital Marketing</h4>
-                  <div className="resume-skill-tags">
-                    <span>Technical SEO</span>
-                    <span>On-Page SEO</span>
-                    <span>Google Analytics</span>
-                    <span>Content Strategy</span>
                   </div>
                 </div>
               </section>
