@@ -1,4 +1,4 @@
-import { Code2, Megaphone, GraduationCap, Search } from 'lucide-react';
+import { Code2, Server, Globe, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import {
   TextReveal,
@@ -12,10 +12,10 @@ import {
 import { ease, staggerItemFromRight } from './AnimationPresets';
 
 const aboutCards = [
-  { icon: <Code2 size={22} />, title: 'MERN Stack & Next.js', desc: 'Building modern, scalable, and high-performance web applications.' },
-  { icon: <Megaphone size={22} />, title: 'PHP & Laravel Developer', desc: 'Experienced in developing diverse web applications with PHP, Laravel, and WordPress.' },
-  { icon: <Search size={22} />, title: 'Responsive Web Design', desc: 'Creating responsive, user-friendly interfaces with clean, maintainable code.' },
-  { icon: <GraduationCap size={22} />, title: 'Technical Instructor', desc: 'Teaching MERN Stack, PHP, Laravel, WordPress, and Digital Marketing.' },
+  { icon: <Code2 size={22} />, title: 'MERN & Next.js Systems', desc: 'Engineering scalable, production-grade applications with clean code, TypeScript, and modern state architectures.' },
+  { icon: <Server size={22} />, title: 'Fintech & Tech Leadership', desc: 'Leading import/export pipelines, Fortnox integrations, and payment settlement workflows on live Swedish fintech platform Splitgrid.' },
+  { icon: <Globe size={22} />, title: 'Independent Delivery (20+ Sites)', desc: 'End-to-end design, development, and deployment across healthcare, educational institutions, and businesses.' },
+  { icon: <GraduationCap size={22} />, title: 'Senior Instructor & AI Trainer', desc: 'Best Employee awardee delivering 15-day AI Tools training for Citizen Life Insurance leaders, plus MERN/Laravel courses.' },
 ];
 
 const About = ({ isActive = false }) => {
@@ -41,7 +41,7 @@ const About = ({ isActive = false }) => {
 
         {/* Heading with dramatic word reveal */}
         <TextReveal
-          text="Crafting Digital Experiences That Matter"
+          text="Engineering Scalable Systems & Mentoring Talent"
           isActive={isActive}
           delay={0.2}
           className="section-heading"
@@ -54,30 +54,30 @@ const About = ({ isActive = false }) => {
 
         {/* Paragraphs with sequential text reveals */}
         <TextReveal
-          text="I am Mijash Sunar, a passionate and goal-driven Full Stack Web Developer based in Pokhara, Nepal, with strong expertise in the MERN Stack (MongoDB, Express.js, React.js, and Node.js) and Next.js, specializing in building modern, scalable, and high-performance web applications."
+          text="I am Mijash Sunar, a Software Engineer, Tech Lead, and Senior Instructor based in Pokhara, Nepal. I specialize in Next.js and the MERN Stack (MongoDB, Express.js, React.js, Node.js) with hands-on experience building scalable, production-grade web applications—including leading core integrations for Splitgrid, a live Sweden-based fintech platform handling payment and inventory workflows."
           isActive={isActive}
           delay={0.7}
-          className="about-text"
-          as="p"
-          staggerDelay={0.015}
-        />
-
-        <TextReveal
-          text="I focus on creating responsive, user-friendly interfaces and writing clean, maintainable code to deliver efficient digital solutions. I also have experience with PHP, Laravel, and WordPress, enabling me to work across diverse web development projects while continuously adapting to the latest technologies and industry best practices."
-          isActive={isActive}
-          delay={1.0}
           className="about-text"
           as="p"
           staggerDelay={0.012}
         />
 
         <TextReveal
-          text="Currently pursuing my BSc. CSIT at Soch College of IT, I also work as a Senior Instructor, teaching MERN Stack, PHP & Laravel, and Digital Marketing, mentoring the next generation of developers."
+          text="Equipped with expertise across TypeScript, PHP, Laravel, and WordPress, I have independently designed, built, and deployed 20+ live production websites for healthcare institutions (Fewacity Hospital, Noble Hospital), academic schools (Kantipur Academy, Rainbow Academic, Balkalyan, and 7+ others), and commercial enterprises (GAMA Pokhara, PABSON Kaski, Monika Suppliers, and more)."
+          isActive={isActive}
+          delay={1.0}
+          className="about-text"
+          as="p"
+          staggerDelay={0.01}
+        />
+
+        <TextReveal
+          text="Recognized as Best Employee at Niti Academy (2025–2026), I delivered an intensive 15-day AI Tools crash course to 30 employees of Citizen Life Insurance across Gandaki Province—training staff at all levels including the MD and Branch Managers on practical AI adoption. Currently completing my BSc. CSIT at Soch College of IT, my journey is driven by solving real-world challenges under production constraints."
           isActive={isActive}
           delay={1.3}
           className="about-text"
           as="p"
-          staggerDelay={0.01}
+          staggerDelay={0.009}
         />
       </div>
 

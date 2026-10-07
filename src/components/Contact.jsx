@@ -11,6 +11,24 @@ import {
 } from './AnimationUtils';
 import { ease } from './AnimationPresets';
 
+const LinkedInIcon = ({ size = 16, ...props }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 const Contact = ({ isActive = false }) => {
   const [note, setNote] = useState('');
   const [showNote, setShowNote] = useState(false);
@@ -60,10 +78,12 @@ const Contact = ({ isActive = false }) => {
   const contactLinks = [
     { href: 'tel:+9779826115361', icon: <Phone size={14} />, text: '+977 982 611 5361', isLink: true },
     { href: 'mailto:mijashsunar1@gmail.com', icon: <Mail size={14} />, text: 'mijashsunar1@gmail.com', isLink: true },
+    { href: 'https://www.linkedin.com/in/mijash-sunar-566642362/', icon: <LinkedInIcon size={14} />, text: 'LinkedIn Profile', isLink: true },
     { icon: <MapPin size={14} />, text: 'Pokhara, Nepal', isLink: false },
   ];
 
   const socials = [
+    { href: 'https://www.linkedin.com/in/mijash-sunar-566642362/', icon: <LinkedInIcon size={16} />, title: 'LinkedIn' },
     { href: 'https://github.com/mijashsunar10', icon: <Code2 size={16} />, title: 'GitHub' },
     { href: 'https://mijashsunar.com.np/', icon: <Globe size={16} />, title: 'Website' },
     { href: 'mailto:mijashsunar1@gmail.com', icon: <Mail size={16} />, title: 'Email' },
@@ -99,7 +119,7 @@ const Contact = ({ isActive = false }) => {
       />
 
       <TextReveal
-        text="Available for website development, full-stack projects, and training programs."
+        text="Available for software engineering roles, fintech integrations, full-stack systems, and enterprise AI training."
         isActive={isActive}
         delay={0.5}
         className="cta-sub"
@@ -160,11 +180,12 @@ const Contact = ({ isActive = false }) => {
             animate={isActive ? { x: 0, opacity: 1 } : { x: -30, opacity: 0 }}
             transition={{ duration: 0.5, delay: 1.4, ease: ease.cinematic }}
           >
-            <option value="" disabled>Project type</option>
-            <option value="Website Development">Website Development</option>
-            <option value="Full Stack Project">Full Stack Project</option>
-            <option value="Training">Training / Mentorship</option>
-            <option value="Other">Other</option>
+            <option value="" disabled>Inquiry / Collaboration type</option>
+            <option value="Software Engineering Role">Software Engineering / Tech Lead Role</option>
+            <option value="Fintech & Payment Integration">Fintech & Payment Integration (Splitgrid/Fortnox)</option>
+            <option value="Full Stack Web Development">Full Stack Web Development (Next.js / MERN / Laravel)</option>
+            <option value="Enterprise AI Training">Enterprise AI Training / Mentorship</option>
+            <option value="Other">Other Inquiry</option>
           </motion.select>
 
           <motion.textarea

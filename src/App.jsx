@@ -289,7 +289,7 @@ function App() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 1.1, ease: EASE_CINEMA }}
               >
-                Full Stack Developer & Digital Strategist
+                Software Engineer / Tech Lead & Senior Instructor
               </motion.div>
 
               {/* Progress bar */}

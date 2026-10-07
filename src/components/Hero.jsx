@@ -59,7 +59,7 @@ const Hero = ({ onContact, onViewResume, isActive = false }) => (
 
       {/* Tags with staggered scale animation */}
       <div className="hero-titles">
-        {['Full Stack Developer', 'MERN Stack Expert', 'Laravel Developer', 'Senior Instructor'].map((tag, i) => (
+        {['Software Engineer / Tech Lead', 'MERN & Next.js Expert', 'Senior Instructor', 'Fintech & Laravel'].map((tag, i) => (
           <motion.span
             className="hero-tag"
             key={tag}
@@ -75,7 +75,7 @@ const Hero = ({ onContact, onViewResume, isActive = false }) => (
 
       {/* Description with word reveal */}
       <TextReveal
-        text="Passionate and goal-driven Full Stack Web Developer with strong expertise in the MERN Stack and Next.js, specializing in building modern, scalable, and high-performance web applications."
+        text="Full Stack Developer & Tech Lead specializing in Next.js and MERN Stack, with hands-on experience building scalable production-grade fintech systems, deploying 20+ live client websites, and delivering enterprise AI training."
         isActive={isActive}
         delay={1.1}
         className="hero-desc"
@@ -111,8 +111,8 @@ const Hero = ({ onContact, onViewResume, isActive = false }) => (
         <div className="hero-stats">
           {[
             { num: 3, suffix: '+', label: 'Years Experience' },
-            { num: 30, suffix: '+', label: 'Projects Delivered' },
-            { num: 100, suffix: '+', label: 'Students Trained' },
+            { num: 20, suffix: '+', label: 'Production Websites' },
+            { num: 30, suffix: '+', label: 'Enterprise AI Trainees' },
           ].map((stat, i) => (
             <motion.div
               className="hero-stat"
@@ -143,7 +143,7 @@ const Hero = ({ onContact, onViewResume, isActive = false }) => (
         <motion.img
           className="hero-image"
           src={profileImg}
-          alt="Mijash Sunar - Web Developer in Pokhara"
+          alt="Mijash Sunar - Software Engineer & Full Stack Developer"
           fetchPriority="high"
           width="380"
           height="380"

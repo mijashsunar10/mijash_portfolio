@@ -1,4 +1,4 @@
-import { Globe, Server, Wrench, Palette, Database, Layout } from 'lucide-react';
+import { Server, Wrench, Database, Layout, Sparkles, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import {
   TextReveal,
@@ -11,34 +11,34 @@ import { ease } from './AnimationPresets';
 
 const skillData = [
   {
-    name: 'Frontend',
+    name: 'Frontend Development',
     icon: <Layout size={16} />,
-    skills: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'Bootstrap', 'HTML', 'CSS', 'Alpine JS'],
+    skills: ['Next.js', 'React.js', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'Alpine JS', 'Bootstrap', 'HTML', 'CSS', 'Web Design'],
   },
   {
-    name: 'Backend',
+    name: 'Backend & APIs',
     icon: <Server size={16} />,
-    skills: ['Node.js', 'Express.js', 'PHP', 'Laravel', 'REST API', 'WordPress', 'Livewire'],
+    skills: ['Node.js', 'Express.js', 'PHP', 'Laravel', 'Livewire', 'WordPress', 'REST API'],
   },
   {
-    name: 'Database',
+    name: 'Databases & Storage',
     icon: <Database size={16} />,
-    skills: ['MongoDB', 'MySQL', 'PostgreSQL'],
+    skills: ['MongoDB', 'PostgreSQL', 'MySQL', 'Cloudinary'],
   },
   {
-    name: 'Tools & DevOps',
+    name: 'DevOps & Tooling',
     icon: <Wrench size={16} />,
-    skills: ['Git', 'VS Code', 'cPanel', 'FileZilla', 'Postman', 'Canva'],
+    skills: ['Docker', 'Git / GitHub', 'Postman', 'cPanel', 'FileZilla', 'VSCode Extension'],
   },
   {
-    name: 'Digital Marketing',
-    icon: <Globe size={16} />,
-    skills: ['Basic SEO', 'Web Design'],
+    name: 'Fintech & Integrations',
+    icon: <Sparkles size={16} />,
+    skills: ['Splitgrid Pipelines', 'Shopify POS', 'Zettle & Sitoo', 'Fortnox Invoicing', 'SIE / CSV / XLSX Export', 'Payment Settlement'],
   },
   {
-    name: 'Soft Skills',
-    icon: <Palette size={16} />,
-    skills: ['Problem-Solving', 'Teaching', 'Adaptability', 'Communication', 'Mentorship'],
+    name: 'Leadership & Mentorship',
+    icon: <GraduationCap size={16} />,
+    skills: ['Enterprise AI Training', 'Tech Leadership', 'Problem-Solving Under Constraints', 'Teaching & Mentoring', 'Basic SEO', 'Canva'],
   },
 ];
 

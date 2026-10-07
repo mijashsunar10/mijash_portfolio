@@ -24,104 +24,210 @@ import imgSplitgrid from '../assets/splitgrid-logo.png';
 
 const projects = [
   {
-    tag: 'Fintech · PHP',
-    name: 'Splitgrid',
+    tag: 'Fintech · Integrations',
+    name: 'Splitgrid Fintech Platform',
     url: 'https://splitgrid.com/en/home/',
     image: imgSplitgrid,
-    desc: 'A Sweden-based fintech platform that automates revenue distribution and payment workflows between retailers and suppliers.',
+    category: 'Fintech',
+    desc: 'Sweden-based fintech automating revenue distribution. Lead 8+ POS integrations (Shopify, Zettle, Fortnox), transaction-safe inventory pipelines, and ZTL/Zignsec settlements.',
   },
   {
-    tag: 'Healthcare · Laravel',
-    name: 'Fewa City Hospital',
+    tag: 'Enterprise AI · Training',
+    name: 'Citizen Life AI Tools Training',
+    url: '',
+    category: 'AI & Training',
+    desc: '15-day AI Tools crash course for 30 Citizen Life Insurance employees across Gandaki Province, training staff including MD and Branch Managers on practical AI workflows.',
+  },
+  {
+    tag: 'Healthcare · Telehealth · AI',
+    name: 'Mental Health & Rehab Platform',
+    url: '',
+    category: 'Healthcare',
+    desc: 'Full-stack defence platform integrating online payments, Cloudinary storage, real-time chat, Jitsi video therapy, and an AI conversational chatbot.',
+  },
+  {
+    tag: 'Healthcare · Production',
+    name: 'Fewacity Hospital',
     url: 'https://fch.com.np',
     image: imgFewa,
-    desc: 'A comprehensive healthcare portal featuring online appointment scheduling, doctor profiles, and dynamic service listings.',
+    category: 'Healthcare',
+    desc: 'Comprehensive hospital web portal featuring online doctor appointment scheduling, departmental listings, emergency info, and responsive clinical UI.',
   },
   {
-    tag: 'Education · IT Company',
-    name: 'Niti Academy',
+    tag: 'Healthcare · Production',
+    name: 'Noble Hospital',
+    url: 'https://noblehospital.com.np/',
+    category: 'Healthcare',
+    desc: 'Modern healthcare portal providing detailed clinical services, medical specialist profiles, patient guidance, and responsive hospital experience.',
+  },
+  {
+    tag: 'Laravel · Real-Time Web',
+    name: 'Collaborative Story Writing',
+    url: '',
+    category: 'Fintech',
+    desc: 'Laravel-based platform featuring real-time co-authoring, Esewa payments integration, live chat, interactive mini-games, and user activity tracking.',
+  },
+  {
+    tag: 'Education & IT · Production',
+    name: 'Niti Academy Corporate Portal',
     url: 'https://nitiacademy.edu.np',
     image: imgNiti,
-    desc: 'An educational platform providing professional IT course listings, digital marketing materials, and student enrollment systems.',
+    category: 'Education',
+    desc: 'Corporate and education platform providing professional IT course listings, digital marketing materials, and student enrollment systems.',
   },
   {
-    tag: 'Tourism · Laravel',
-    name: 'Nepalese Trekking',
+    tag: 'Tourism · Dynamic Booking',
+    name: 'Dawn in Nepal Adventures',
     url: 'https://nepalesetrekking.com',
     image: imgTrekking,
-    desc: 'A dynamic tourism portal designed to showcase mountain trekking itineraries, travel packages, and travel guides in Nepal.',
+    category: 'Business',
+    desc: 'Dynamic tourism website for Dawn in Nepal Adventures P. Ltd, featuring admin-managed itineraries, adventure packages, and direct booking.',
   },
   {
-    tag: 'Association · WordPress',
-    name: 'Gamma Pokhara',
-    url: '',
+    tag: 'Education · Culinary',
+    name: 'School of Bakery & Pastry',
+    url: 'https://schoolofbakingandpastry.com.np/',
+    image: imgBakery,
+    category: 'Education',
+    desc: 'Culinary training portal featuring interactive course timetables, instructor bios, admin controls, and automated email registration systems.',
+  },
+  {
+    tag: 'Association · Automobile',
+    name: 'GAMA Pokhara',
+    url: 'https://gamapokhara.org.np/',
     image: imgGama,
-    desc: 'An association platform designed for the Gandaki Automobile Association featuring membership listings and news.',
+    category: 'Business',
+    desc: 'Official platform for Gandaki Automobile Association featuring automotive industry news, member directory, and association announcements.',
   },
   {
-    tag: 'Education · School',
-    name: 'Blooming Buds Academy',
-    url: '',
-    desc: 'A school website featuring academic programs, news, event notices, and student portals for a premium educational institution.',
+    tag: 'Education Association · Portal',
+    name: 'PABSON Kaski',
+    url: 'https://pabsonkaski.org.np/',
+    category: 'Education',
+    desc: 'Central association platform for Private and Boarding Schools\' Organization Nepal (Kaski), delivering exam notices, circulars, and school rosters.',
   },
   {
-    tag: 'Education · School',
-    name: 'Dhungesanghu Boarding School',
-    url: '',
-    desc: 'A school website featuring academic schedules, admissions information, and interactive gallery systems.',
+    tag: 'Business · Distribution',
+    name: 'Monika Suppliers',
+    url: 'https://monikasuppliers.com.np/',
+    category: 'Business',
+    desc: 'Commercial tyre and automotive distribution catalog with product specifications, wholesale distributor pricing channels, and contact points.',
+  },
+  {
+    tag: 'Manufacturing · UPVC',
+    name: 'Sadabahar UPVC',
+    url: 'https://www.sadabaharupvc.com/',
+    category: 'Business',
+    desc: 'Industrial product catalogue and portfolio for modern UPVC profiles, architectural windows, doors, and building fabrication materials.',
+  },
+  {
+    tag: 'Media · Printing Press',
+    name: 'Niti Press',
+    url: 'https://nitipress.com/',
+    category: 'Business',
+    desc: 'Commercial printing press portal showcasing print service categories, publishing portfolios, order quotation workflows, and print galleries.',
+  },
+  {
+    tag: 'Commercial · Rental',
+    name: 'Lakecity Rental',
+    url: 'https://lakecityrental.com.np/',
+    category: 'Business',
+    desc: 'Vehicle and equipment rental service portal facilitating fleet browsing, tariff calculation, direct booking inquiries, and customer concierge support.',
   },
   {
     tag: 'Education · School',
     name: 'Balkalyan High School',
-    url: '',
+    url: 'https://balkalyanhighschool.edu.np/',
     image: imgBalkalyan,
-    desc: 'A school website displaying dynamic notifications, events, staff directories, and academic resources.',
+    category: 'Education',
+    desc: 'Secondary school website featuring academic curricula, dynamic notice boards, faculty directories, and admissions information.',
   },
   {
     tag: 'Education · School',
     name: 'Kantipur Academy',
-    url: '',
+    url: 'https://kantipuracademypokhara.edu.np/',
     image: imgKantipur,
-    desc: 'An educational landing page with student admission forms, curriculum highlights, and course databases.',
+    category: 'Education',
+    desc: 'Educational institution platform featuring student admission forms, academic calendar, curriculum highlights, and photo gallery.',
   },
   {
     tag: 'Education · School',
     name: 'Rainbow Academic Homes',
-    url: '',
+    url: 'https://rainbowacademic.edu.np/',
     image: imgRah,
-    desc: 'A secondary school platform with information portals for parents, course structures, and event announcements.',
-  },
-  {
-    tag: 'Business · E-commerce',
-    name: 'Monika Tyre Suppliers',
-    url: '',
-    desc: 'A business catalogue and inventory page displaying product specifications and distributor contact channels.',
+    category: 'Education',
+    desc: 'Secondary school portal with information portals for parents, course structures, event announcements, and student achievement showcases.',
   },
   {
     tag: 'Education · School',
     name: 'Jyotikunj Secondary School',
-    url: '',
+    url: 'https://jyotikunjschool.edu.np/',
     image: imgJyotikunj,
-    desc: 'A portal showcasing curriculum details, dynamic event calendars, and school announcement boards.',
+    category: 'Education',
+    desc: 'School portal showcasing curriculum details, academic timetables, administrative announcements, and extracurricular event calendars.',
   },
   {
-    tag: 'Education · Bakery',
-    name: 'School of Bakery & Pastry',
+    tag: 'Education · School',
+    name: 'Baseline Academy',
+    url: 'https://baselineacademyschool.edu.np/',
+    category: 'Education',
+    desc: 'Responsive educational website featuring academic programs, admission guidance, notices, and modern educational resources.',
+  },
+  {
+    tag: 'Education · School',
+    name: 'Dhungesanghu School',
+    url: 'https://dhungesanghuschool.edu.np/',
+    category: 'Education',
+    desc: 'School website featuring academic schedules, examination timetables, admission details, and interactive school notice systems.',
+  },
+  {
+    tag: 'Education · School',
+    name: 'Bhasker Memorial School',
+    url: 'https://bhasker.edu.np/',
+    category: 'Education',
+    desc: 'School platform with news announcements, event highlights, curriculum guides, and parent-school communication channels.',
+  },
+  {
+    tag: 'Education · School',
+    name: 'National Creation Academy',
+    url: 'https://nationalcreationacademy.edu.np/',
+    category: 'Education',
+    desc: 'Academic portal showcasing educational programs, dynamic notice circulars, admissions forms, and student activities.',
+  },
+  {
+    tag: 'Education · Hostel',
+    name: 'Manakamana Chhatrabas',
+    url: 'https://manakamanachhatrabas.edu.np/',
+    category: 'Education',
+    desc: 'Student residential hostel platform detailing accommodation amenities, admissions guidelines, safety standards, and warden contacts.',
+  },
+  {
+    tag: 'Higher Ed · College',
+    name: 'BBA College Portal',
+    url: 'https://bba.edu.np/',
+    category: 'Education',
+    desc: 'Higher education management portal highlighting Bachelor of Business Administration syllabus, faculty credentials, and semester schedules.',
+  },
+  {
+    tag: 'AI Workshop · NAAV',
+    name: 'NAAV Student AI Workshop',
     url: '',
-    image: imgBakery,
-    desc: 'A culinary training portal featuring course timetables, instructor bios, and interactive pastry workshop registrations.',
+    category: 'AI & Training',
+    desc: 'Hands-on AI tools training for students of Nepal Adarsha Awasiya Vidyalaya in Lekhnath, teaching effective prompting, research, and productivity.',
   },
   {
     tag: 'Personal · Portfolio',
     name: 'Raghunath Wagle',
-    url: '',
-    desc: 'A personal portfolio site featuring research publications, consulting history, and contact forms.',
+    url: 'https://www.raghunathwagle.com.np/',
+    category: 'Personal',
+    desc: 'Personal professional portal featuring academic publications, consulting history, career credentials, and direct contact forms.',
   },
   {
     tag: 'Personal · Portfolio',
-    name: 'Madhab Pokharel',
-    url: '',
-    desc: 'A personal developer portfolio showcasing web development projects, skills, and client testimonials.',
+    name: 'Baburam Baral',
+    url: 'https://baburambaral.com.np/',
+    category: 'Personal',
+    desc: 'Custom personal portfolio presenting professional achievements, community leadership, consulting offerings, and client testimonials.',
   },
 ];
 
@@ -164,11 +270,12 @@ const Portfolio = ({ isActive = false }) => {
   const filteredProjects = projects.filter(p => {
     const matchesCategory = 
       selectedCategory === 'All' || 
-      (selectedCategory === 'Laravel' && p.tag.toLowerCase().includes('laravel')) ||
-      (selectedCategory === 'React' && (p.tag.toLowerCase().includes('react') || p.tag.toLowerCase().includes('mern') || p.tag.toLowerCase().includes('it company'))) ||
-      (selectedCategory === 'WordPress' && p.tag.toLowerCase().includes('wordpress')) ||
-      (selectedCategory === 'Education' && (p.tag.toLowerCase().includes('school') || p.tag.toLowerCase().includes('bakery') || p.tag.toLowerCase().includes('academy') || p.tag.toLowerCase().includes('education'))) ||
-      (selectedCategory === 'Personal' && (p.tag.toLowerCase().includes('personal') || p.tag.toLowerCase().includes('portfolio')));
+      (selectedCategory === 'Fintech' && (p.category === 'Fintech' || p.tag.toLowerCase().includes('fintech') || p.tag.toLowerCase().includes('laravel'))) ||
+      (selectedCategory === 'Healthcare' && (p.category === 'Healthcare' || p.tag.toLowerCase().includes('health'))) ||
+      (selectedCategory === 'AI & Training' && (p.category === 'AI & Training' || p.tag.toLowerCase().includes('ai') || p.tag.toLowerCase().includes('training'))) ||
+      (selectedCategory === 'Education' && (p.category === 'Education' || p.tag.toLowerCase().includes('school') || p.tag.toLowerCase().includes('academy') || p.tag.toLowerCase().includes('hostel') || p.tag.toLowerCase().includes('college') || p.tag.toLowerCase().includes('bakery'))) ||
+      (selectedCategory === 'Business' && (p.category === 'Business' || p.tag.toLowerCase().includes('business') || p.tag.toLowerCase().includes('tourism') || p.tag.toLowerCase().includes('rental') || p.tag.toLowerCase().includes('manufacturing') || p.tag.toLowerCase().includes('automobile') || p.tag.toLowerCase().includes('press'))) ||
+      (selectedCategory === 'Personal' && (p.category === 'Personal' || p.tag.toLowerCase().includes('personal') || p.tag.toLowerCase().includes('portfolio')));
     
     const matchesSearch = 
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -221,10 +328,10 @@ const Portfolio = ({ isActive = false }) => {
 
       <div className="showcase-head" style={{ zIndex: 2 }}>
         <SlideIn isActive={isActive} direction="up" delay={0.05} distance={25}>
-          <div className="section-label">Selected Work</div>
+          <div className="section-label">Selected Work & Deployments</div>
         </SlideIn>
         <TextReveal
-          text="All Projects"
+          text="Featured Projects & Delivery"
           isActive={isActive}
           delay={0.15}
           className="section-heading"
@@ -237,12 +344,13 @@ const Portfolio = ({ isActive = false }) => {
       <div className="portfolio-controls" style={{ zIndex: 3 }}>
         <div className="portfolio-filters">
           {[
-            { id: 'All', label: 'All' },
-            { id: 'Laravel', label: 'Laravel / PHP' },
-            { id: 'React', label: 'React / MERN' },
-            { id: 'WordPress', label: 'WordPress' },
-            { id: 'Education', label: 'Education' },
-            { id: 'Personal', label: 'Personal / Portfolios' }
+            { id: 'All', label: `All (${projects.length})` },
+            { id: 'Fintech', label: 'Fintech & Systems' },
+            { id: 'Healthcare', label: 'Healthcare' },
+            { id: 'AI & Training', label: 'AI & Training' },
+            { id: 'Education', label: 'Education & Schools' },
+            { id: 'Business', label: 'Business & Orgs' },
+            { id: 'Personal', label: 'Portfolios' }
           ].map(cat => (
             <button
               key={cat.id}
