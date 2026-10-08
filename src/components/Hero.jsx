@@ -59,7 +59,7 @@ const Hero = ({ onContact, onViewResume, isActive = false }) => (
 
       {/* Tags with staggered scale animation */}
       <div className="hero-titles">
-        {['Software Engineer / Tech Lead', 'MERN & Next.js Expert', 'Senior Instructor', 'Fintech & Laravel'].map((tag, i) => (
+        {['Software Engineer / Tech Lead', 'MERN & Next.js Expert', 'Senior Instructor', 'Fintech & Laravel', 'Docker & CI/CD'].map((tag, i) => (
           <motion.span
             className="hero-tag"
             key={tag}
