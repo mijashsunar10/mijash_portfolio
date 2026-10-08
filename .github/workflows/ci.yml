@@ -30,3 +30,31 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t mijashwizz .
+
+  deploy:
+    needs: [build, docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Upload to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./
